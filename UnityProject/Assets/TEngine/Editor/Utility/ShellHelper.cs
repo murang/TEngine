@@ -121,6 +121,10 @@ namespace TEngine.Editor
                         StandardOutputEncoding = Encoding.UTF8,
                         StandardErrorEncoding = Encoding.UTF8
                     };
+                    
+#if UNITY_EDITOR_OSX || UNITY_EDITOR_LINUX
+                    startInfo.EnvironmentVariables["DOTNET_ROOT"] = "/usr/local/share/dotnet";
+#endif
 
                     process.StartInfo = startInfo;
                     process.OutputDataReceived += (_, args) =>

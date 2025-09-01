@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PATH=$PATH:/usr/local/share/dotnet
+
 cd "$(dirname "$0")"
 echo "当前目录: $(pwd)"
 
