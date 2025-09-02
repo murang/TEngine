@@ -25,3 +25,16 @@ dotnet "${LUBAN_DLL}" \
     -x code.lineEnding=crlf \
     -x outputCodeDir="${CODE_OUTPATH}" \
     -x outputDataDir="${DATA_OUTPATH}"
+
+export SERVER_DATA_OUTPATH="${WORKSPACE}/Server/configs/"
+export SERVER_CODE_OUTPATH="${WORKSPACE}/Server/cfg"
+
+dotnet "${LUBAN_DLL}" \
+    -t server \
+    -c go-json \
+    -d json \
+    --conf "${CONF_ROOT}/luban.conf" \
+    -x code.lineEnding=crlf \
+    -x outputCodeDir="${SERVER_CODE_OUTPATH}" \
+    -x outputDataDir="${SERVER_DATA_OUTPATH}" \
+    -x lubanGoModule=server/luban
