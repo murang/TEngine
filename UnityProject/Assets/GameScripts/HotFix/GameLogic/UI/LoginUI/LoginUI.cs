@@ -23,8 +23,8 @@ namespace GameLogic
         #region 事件
         private void OnClickLoginBtn()
         {
-            var item = ConfigSystem.Instance.Tables.TbItem.Get(10000);
-            Log.Error(item.Desc);
+            var item = ConfigSystem.Instance.Tables.TbItem.GetOrDefault(10000);
+            Log.Warning(item.Desc);
         }
         #endregion
 
