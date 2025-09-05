@@ -16,6 +16,17 @@ public class GameModule
     }
 
     private static RootModule _base;
+    
+    /// <summary>
+    /// 获取对象池模块。
+    /// </summary>
+    public static IObjectPoolModule ObjectPool
+    {
+        get => _objectPool = Get<IObjectPoolModule>();
+        private set => _objectPool = value;
+    }
+
+    private static IObjectPoolModule _objectPool;
 
     /// <summary>
     /// 获取调试模块。
@@ -25,8 +36,7 @@ public class GameModule
         get => _debugger ??= Get<IDebuggerModule>();
         private set => _debugger = value;
     }
-
-
+    
     private static IDebuggerModule _debugger;
 
     /// <summary>
