@@ -8,8 +8,8 @@ namespace GameLogic
 {
     public class BattleManager : MonoBehaviour
     {
-        public CellView cellView;
-        public Grid grid;
+        public CellView cellView { get; private set; }
+        public Grid grid { get; private set; }
         
         private IFsm<BattleManager> _fsm;
         private IObjectPool<Cell> _cellPool;
