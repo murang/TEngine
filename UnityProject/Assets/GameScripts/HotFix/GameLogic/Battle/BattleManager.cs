@@ -8,11 +8,23 @@ namespace GameLogic
 {
     public class BattleManager : MonoBehaviour
     {
+        private IFsm<BattleManager> _fsm;
         private IObjectPool<Cell> _cellPool;
         
         private void Awake()
         {
+            _fsm = GameModule.Fsm.CreateFsm(this, new List<FsmState<BattleManager>>()
+            {
+                new BattleStatePrepare(),
+                new BattleStateStart(),
+                new BattleStateRunning(),
+            });
             _cellPool = GameModule.ObjectPool.CreateSingleSpawnObjectPool<Cell>();
+        }
+
+        private void Start()
+        {
+            _fsm.Start<BattleStatePrepare>();
             
             GameEvent.AddEventListener(IEventBattle_Event.StartBattle, StartGame);
         }
@@ -26,21 +38,19 @@ namespace GameLogic
         {
             Log.Warning("START ~");
             
-            
-            if (_cellPool.CanSpawn())
-            {
-                Cell cell = _cellPool.Spawn();
-                cell.SayHello();
-            }
-            else
-            {
-                var obj = new GameObject("nice");
-                CellView v = obj.AddComponent<CellView>();
-                Cell c = new Cell(v);
-                
-                _cellPool.Register(c, true);
-            }
-            
+            // if (_cellPool.CanSpawn())
+            // {
+            //     Cell cell = _cellPool.Spawn();
+            //     cell.SayHello();
+            // }
+            // else
+            // {
+            //     var obj = new GameObject("nice");
+            //     CellView v = obj.AddComponent<CellView>();
+            //     Cell c = new Cell(v);
+            //     
+            //     _cellPool.Register(c, true);
+            // }
         }
     }
 }

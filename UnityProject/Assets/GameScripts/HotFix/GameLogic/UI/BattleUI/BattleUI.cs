@@ -26,8 +26,7 @@ namespace GameLogic
         }
         private void OnClickRestartBtn()
         {
-            UIModule.Instance.CloseAll();
-            UIModule.Instance.ShowUIAsync<LoginUI>();
+            GameEvent.Get<IEventBattle>().RestartBattle();
         }
         #endregion
 
