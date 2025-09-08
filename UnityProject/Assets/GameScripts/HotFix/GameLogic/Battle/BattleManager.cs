@@ -8,11 +8,12 @@ namespace GameLogic
 {
     public class BattleManager : MonoBehaviour
     {
-        public CellView cellView;
+        public GameObject prefabDropView;
         public Grid grid;
         
         private IFsm<BattleManager> _fsm;
-        private IObjectPool<Cell> _cellPool;
+        private IObjectPool<Drop> _dropPool;
+        private IBattleLogic _logic;
         
         private void Awake()
         {
@@ -21,40 +22,61 @@ namespace GameLogic
                 new BattleStatePrepare(),
                 new BattleStateStart(),
                 new BattleStateRunning(),
+                new BattleStateWin(),
+                new BattleStateLose(),
             });
-            _cellPool = GameModule.ObjectPool.CreateSingleSpawnObjectPool<Cell>();
+            _dropPool = GameModule.ObjectPool.CreateSingleSpawnObjectPool<Drop>();
+            _logic = new BattleLogic();
         }
 
         private void Start()
         {
             _fsm.Start<BattleStatePrepare>();
+            GameModule.UI.ShowUIAsync<BattleUI>();
         }
 
-        public void BuildGrid()
+        private void OnDestroy()
         {
+            GameModule.Fsm.DestroyFsm(_fsm);
+            GameModule.ObjectPool.DestroyObjectPool<Drop>();
+            _logic = null;
+        }
+
+        public void InitBattleLogic()
+        {
+            _logic.Init(BattleConst.GridSize);
+            grid?.Build(_logic);
+        }
+
+        public void NewDrop(int num)
+        {
+            if (_dropPool is null)
+            {
+                throw new Exception("GetDrop Drop pool is null");
+            }
             
+            Drop drop;
+            if (_dropPool.CanSpawn())
+            {
+                drop = _dropPool.Spawn();
+                drop.Reset();
+                drop.SetNum(num);
+            }
+            else
+            {
+                var view = Instantiate(prefabDropView, grid.transform);
+                drop = Drop.Create(view.GetComponent<DropView>());
+                drop.SetNum(num);
+                _dropPool.Register(drop, true);
+            }
+            
+            drop.SetPosition(grid.bottomCenter + new Vector2(0, _logic.GetSize() +0.5f));
         }
         
-        /// <summary>
-        /// 开始游戏
-        /// </summary>
+        
         public void StartGame()
         {
-            Log.Warning("START ~");
-            
-            // if (_cellPool.CanSpawn())
-            // {
-            //     Cell cell = _cellPool.Spawn();
-            //     cell.SayHello();
-            // }
-            // else
-            // {
-            //     var obj = new GameObject("nice");
-            //     CellView v = obj.AddComponent<CellView>();
-            //     Cell c = new Cell(v);
-            //     
-            //     _cellPool.Register(c, true);
-            // }
+            _logic.Start();
         }
     }
 }

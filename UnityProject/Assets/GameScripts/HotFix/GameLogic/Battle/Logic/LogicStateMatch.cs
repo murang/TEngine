@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TEngine;
 using UnityEngine;
 
 namespace GameLogic
 {
-    public static class BattleConst
+    public class LogicStateMatch : FsmState<IBattleLogic>
     {
-        public static int GridSize = 7;
+        
     }
 }

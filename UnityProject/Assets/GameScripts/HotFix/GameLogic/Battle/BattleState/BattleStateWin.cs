@@ -5,13 +5,16 @@ using UnityEngine;
 
 namespace GameLogic
 {
-    public class BattleStatePrepare : FsmState<BattleManager>
+    public class BattleStateWin : FsmState<BattleManager>
     {
-
         protected override void OnEnter(IFsm<BattleManager> fsm)
         {
-            Log.Debug("BattleStatePrepare OnEnter");
-            ChangeState<BattleStateStart>(fsm);
+            
+        }
+
+        protected override void OnLeave(IFsm<BattleManager> fsm, bool isShutdown)
+        {
+            
         }
     }
 }

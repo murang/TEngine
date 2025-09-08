@@ -5,17 +5,13 @@ using UnityEngine;
 
 namespace GameLogic
 {
-    public class BattleStateRunning : FsmState<BattleManager>
-    { 
-        protected override void OnInit(IFsm<BattleManager> fsm)
-        {
-            
-        }
-
+    public class BattleStatePrepare : FsmState<BattleManager>
+    {
         protected override void OnEnter(IFsm<BattleManager> fsm)
         {
             BattleManager manager = fsm.Owner;
-            manager.StartGame();
+            manager.InitBattleLogic();
+            ChangeState<BattleStateStart>(fsm);
         }
     }
 }
