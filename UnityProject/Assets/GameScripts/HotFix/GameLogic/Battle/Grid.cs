@@ -6,17 +6,20 @@ using UnityEngine.Pool;
 
 namespace GameLogic
 {
+    [RequireComponent(typeof(BoxCollider2D))]
     public class Grid : MonoBehaviour
     {
         public GameObject gridCell;
         public Vector2 bottomCenter;
-
+        
+        private BoxCollider2D _collider;
         private IBattleLogic _logic;
         private readonly List<GameObject> _cells = new();
         private IObjectPool<GameObject> _cellPool;
 
         private void Awake()
         {
+            _collider = GetComponent<BoxCollider2D>();
             _cellPool = new ObjectPool<GameObject>(
                 createFunc: () => Instantiate(gridCell), // 创建新对象的方法
                 actionOnGet: (obj) => obj.SetActive(true), // 获取对象时的操作
@@ -48,6 +51,9 @@ namespace GameLogic
                     _cells.Add(cell);
                 }
             }
+
+            _collider.offset = new Vector2(.0f, .5f);
+            _collider.size = new Vector2(_logic.GetSize(), _logic.GetSize());
         }
     }
 }
