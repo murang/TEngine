@@ -19,7 +19,8 @@ namespace GameLogic
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Log.Debug(eventData.position);
+            var x = _grid.GetTouchX(eventData.position);
+            GameEvent.Send(IEventBattleLogic_Event.TouchGrid, x);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace GameLogic
 {
     public class BattleLogic: IBattleLogic
     {
+        private int _newDrop;
         private int _size;
         private Drop[][] _dropMatrix;
         private IFsm<IBattleLogic> _fsm;
@@ -43,7 +44,13 @@ namespace GameLogic
 
         public int NewDrop()
         {
-            return Random.Range(1, _size+1);
+            _newDrop = Random.Range(1, _size+1);
+            return _newDrop;
+        }
+
+        public void DropDown(int x)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void Match()

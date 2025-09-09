@@ -15,19 +15,19 @@ namespace GameLogic
 
         protected override void OnEnter(IFsm<BattleManager> fsm)
         {
-            GameEvent.AddEventListener<int>(IEventBattleLogic_Event.NewDrop, NewDrop);
+            GameEvent.AddEventListener<int>(IEventBattle_Event.ShowNewDrop, ShowNewDrop);
             _manager.StartGame();
             GameModule.UI.HideUI<BattleUI>();
         }
 
         protected override void OnLeave(IFsm<BattleManager> fsm, bool isShutdown)
         {
-            GameEvent.RemoveEventListener<int>(IEventBattleLogic_Event.NewDrop, NewDrop);
+            GameEvent.RemoveEventListener<int>(IEventBattle_Event.ShowNewDrop, ShowNewDrop);
         }
 
-        void NewDrop(int num)
+        void ShowNewDrop(int num)
         {
-            _manager.NewDrop(num);
+            _manager.ShowNewDrop(num);
         }
     }
 }

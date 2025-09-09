@@ -48,7 +48,7 @@ namespace GameLogic
             grid?.Build(_logic);
         }
 
-        public void NewDrop(int num)
+        public void ShowNewDrop(int num)
         {
             if (_dropPool is null)
             {

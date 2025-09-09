@@ -12,6 +12,7 @@ namespace GameLogic
         public GameObject gridCell;
         public Vector2 bottomCenter;
         
+        private Camera _mainCamera;
         private BoxCollider2D _collider;
         private IBattleLogic _logic;
         private readonly List<GameObject> _cells = new();
@@ -19,6 +20,7 @@ namespace GameLogic
 
         private void Awake()
         {
+            _mainCamera = Camera.main;
             _collider = GetComponent<BoxCollider2D>();
             _cellPool = new ObjectPool<GameObject>(
                 createFunc: () => Instantiate(gridCell), // 创建新对象的方法
@@ -46,7 +48,7 @@ namespace GameLogic
                 for (int y = 0; y < _logic.GetSize(); y++)
                 {
                     var cell = _cellPool.Get();
-                    cell.transform.SetPositionAndRotation(new Vector3(origin.x + x, origin.y + y), Quaternion.identity);
+                    cell.transform.SetLocalPositionAndRotation(new Vector3(origin.x + x, origin.y + y), Quaternion.identity);
                     cell.transform.SetParent(transform);
                     _cells.Add(cell);
                 }
@@ -54,6 +56,12 @@ namespace GameLogic
 
             _collider.offset = new Vector2(.0f, .5f);
             _collider.size = new Vector2(_logic.GetSize(), _logic.GetSize());
+        }
+
+        public int GetTouchX(Vector2 touch)
+        {
+            var worldPos = _mainCamera.ScreenToWorldPoint(touch);
+            return (int)(worldPos.x - transform.position.x + _logic.GetSize() / 2.0f);
         }
     }
 }

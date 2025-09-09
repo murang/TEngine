@@ -10,11 +10,13 @@ namespace GameLogic
     {
         void StartBattle();
         void RestartBattle();
+        void ShowNewDrop(int num);
     }
 
     [EventInterface(EEventGroup.GroupLogic)]
     public interface IEventBattleLogic
     {
-        void NewDrop(int num);
+        void NewDrop();
+        void TouchGrid(int x);
     }
 }

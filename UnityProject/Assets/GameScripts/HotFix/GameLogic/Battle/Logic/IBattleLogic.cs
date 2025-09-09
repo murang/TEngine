@@ -18,6 +18,7 @@ namespace GameLogic
         int GetSize();
         void Start();
         int NewDrop();
+        void DropDown(int x);
         void Match();
     }
 }
