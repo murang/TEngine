@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TEngine;
 using UnityEngine;
 
@@ -7,7 +8,6 @@ namespace GameLogic
 {
     public class Drop : ObjectBase
     {
-        private bool _isDown;
         private DropData _data;
         private DropView _view;
         
@@ -18,12 +18,8 @@ namespace GameLogic
             d.Initialize(d._view.name, d._view);
             return d;
         }
-
-        public void SetNum(int num)
-        {
-            _data.num = num;
-            _view.SetData(_data);
-        }
+        
+        public DropView View => _view;
         
         public void SetData(DropData data)
         {
@@ -33,7 +29,6 @@ namespace GameLogic
 
         public void Reset()
         {
-            _isDown = false;
             _data = default;
             _view.Reset();
         }
@@ -45,11 +40,6 @@ namespace GameLogic
                 Object.DestroyImmediate(_view.gameObject);
                 _view = null;
             }
-        }
-
-        public void SetPosition(Vector2 pos)
-        {
-            _view.transform.SetLocalPositionAndRotation(pos, Quaternion.identity);
         }
     }
 }

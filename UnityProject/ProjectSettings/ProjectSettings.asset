@@ -794,7 +794,9 @@ PlayerSettings:
   scriptingDefineSymbols:
     Android: ENABLE_LOG;TextMeshPro;ENABLE_HYBRIDCLR
     EmbeddedLinux: UNITY_POST_PROCESSING_STACK_V2;TextMeshPro
+    GameCoreScarlett: 
     GameCoreXboxOne: UNITY_POST_PROCESSING_STACK_V2;TextMeshPro
+    LinuxHeadlessSimulation: 
     Lumin: UNITY_POST_PROCESSING_STACK_V2;TextMeshPro
     Nintendo Switch: UNITY_POST_PROCESSING_STACK_V2;TextMeshPro
     PS4: UNITY_POST_PROCESSING_STACK_V2;TextMeshPro

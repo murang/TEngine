@@ -7,9 +7,9 @@ namespace GameLogic
 {
     public class BattleLogic: IBattleLogic
     {
-        private int _newDrop;
+        private DropData _newDrop;
         private int _size;
-        private Drop[][] _dropMatrix;
+        private DropData[][] _dropMatrix;
         private IFsm<IBattleLogic> _fsm;
         
         public void Init(int size)
@@ -25,10 +25,10 @@ namespace GameLogic
             });
             
             _size = size;
-            _dropMatrix = new Drop[size][];
+            _dropMatrix = new DropData[size][];
             for (int x = 0; x < size; x++)
             {
-                _dropMatrix[x] = new Drop[size];
+                _dropMatrix[x] = new DropData[size];
             }
         }
         
@@ -42,15 +42,35 @@ namespace GameLogic
             _fsm.Start<LogicStateWait>();
         }
 
-        public int NewDrop()
+        public DropData NewDrop()
         {
-            _newDrop = Random.Range(1, _size+1);
+            _newDrop = MemoryPool.Acquire<DropData>();
+            _newDrop.num = Random.Range(1, _size + 1);
             return _newDrop;
         }
 
         public void DropDown(int x)
         {
-            throw new System.NotImplementedException();
+            // 如果当前列已经满了 无法下落
+            var col = _dropMatrix[x];
+            if (col[_size-1] != null)
+            {
+                Log.Debug("col full");
+                return;
+            }
+
+            for (int y = 0; y < _size; y++)
+            {
+                if (col[y] == null)
+                {
+                    _newDrop.x = x;
+                    _newDrop.y = y;
+                    col[y] = _newDrop;
+                    _newDrop = null;
+                    GameEvent.Get<IEventBattle>().DropDownStart(x, y);
+                    break;
+                }
+            }
         }
 
         public void Match()

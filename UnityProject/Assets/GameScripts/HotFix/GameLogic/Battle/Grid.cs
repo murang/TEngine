@@ -11,7 +11,8 @@ namespace GameLogic
     {
         public GameObject gridCell;
         public Vector2 bottomCenter;
-        
+
+        private Vector2 _origin;
         private Camera _mainCamera;
         private BoxCollider2D _collider;
         private IBattleLogic _logic;
@@ -42,13 +43,13 @@ namespace GameLogic
             _cells.Clear();
             
             _logic = logic;
-            Vector2 origin = new Vector2(bottomCenter.x - _logic.GetSize() / 2.0f + 0.5f, bottomCenter.y + 0.5f);
+            _origin = new Vector2(bottomCenter.x - _logic.GetSize() / 2.0f + 0.5f, bottomCenter.y + 0.5f);
             for (int x = 0; x < _logic.GetSize(); x++)
             {
                 for (int y = 0; y < _logic.GetSize(); y++)
                 {
                     var cell = _cellPool.Get();
-                    cell.transform.SetLocalPositionAndRotation(new Vector3(origin.x + x, origin.y + y), Quaternion.identity);
+                    cell.transform.SetLocalPositionAndRotation(new Vector3(_origin.x + x, _origin.y + y), Quaternion.identity);
                     cell.transform.SetParent(transform);
                     _cells.Add(cell);
                 }
@@ -56,6 +57,11 @@ namespace GameLogic
 
             _collider.offset = new Vector2(.0f, .5f);
             _collider.size = new Vector2(_logic.GetSize(), _logic.GetSize());
+        }
+
+        public Vector2 GetOrigin()
+        {
+            return _origin;
         }
 
         public int GetTouchX(Vector2 touch)
