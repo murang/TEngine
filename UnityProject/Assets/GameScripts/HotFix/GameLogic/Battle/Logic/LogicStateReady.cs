@@ -5,26 +5,30 @@ using UnityEngine;
 
 namespace GameLogic
 {
-    public class LogicStateWait : FsmState<IBattleLogic>
+    public class LogicStateReady : FsmState<IBattleLogic>
     {
         private IFsm<IBattleLogic> _fsm;
         private IBattleLogic _logic;
         protected override void OnEnter(IFsm<IBattleLogic> fsm)
         {
-            GameEvent.AddEventListener(IEventBattle_Event.DropDownEnd, DropDownEnd);
+            GameEvent.AddEventListener<int>(IEventBattle_Event.TouchGrid, TouchGrid);
             
             _fsm = fsm;
             _logic = fsm.Owner;
+            GameEvent.Get<IEventBattle>().ShowNewDrop(_logic.NewDrop());
         }
 
         protected override void OnLeave(IFsm<IBattleLogic> fsm, bool isShutdown)
         {
-            GameEvent.RemoveEventListener(IEventBattle_Event.DropDownEnd, DropDownEnd);
+            GameEvent.RemoveEventListener<int>(IEventBattle_Event.TouchGrid, TouchGrid);
         }
 
-        void DropDownEnd()
+        void TouchGrid(int x)
         {
-            ChangeState<LogicStateMatch>(_fsm);
+            if (_logic.DropDown(x))
+            {
+                ChangeState<LogicStateWait>(_fsm);
+            }
         }
     }
 }

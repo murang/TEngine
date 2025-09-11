@@ -14,8 +14,7 @@ namespace GameLogic
         public Grid grid;
         
         private Drop _newDrop;
-        private Drop[][] _drops;
-        
+        private Drop[,] _drops;
         private IFsm<BattleManager> _fsm;
         private IObjectPool<Drop> _dropPool;
         private IBattleLogic _logic;
@@ -49,6 +48,7 @@ namespace GameLogic
 
         public void InitBattleLogic()
         {
+            _drops = new Drop[BattleConst.GridSize,BattleConst.GridSize];
             _logic.Init(BattleConst.GridSize);
             grid?.Build(_logic);
         }
@@ -84,13 +84,83 @@ namespace GameLogic
 
         public void DropDown(int x, int y)
         {
-            _newDrop.View.transform.SetLocalPositionAndRotation(grid.GetOrigin() + new Vector2(x, _logic.GetSize() + 0.5f), Quaternion.identity);
-            _newDrop.View.transform.DOLocalMove(grid.GetOrigin() + new Vector2(x, y), 1)
+            _drops[x,y] = _newDrop;
+            _newDrop.View.transform.SetLocalPositionAndRotation(grid.GetOrigin() + new Vector2(x, _logic.GetSize() - 0.5f), Quaternion.identity);
+            _newDrop.View.transform.DOLocalMove(grid.GetOrigin() + new Vector2(x, y), .5f)
                 .SetEase(Ease.InQuad)
                 .OnKill(() =>
             {
                 GameEvent.Get<IEventBattle>().DropDownEnd();
             });
+            _newDrop = null;
+        }
+
+        public void MatchStart(List<DropData> list)
+        {
+            var seq = DOTween.Sequence();
+            for (int i = 0; i < list.Count; i++)
+            {
+                var data = list[i];
+                var drop = _drops[data.x,data.y];
+                if (drop == null)
+                {
+                    throw new Exception($"MatchStart Drop is null pos: {data.x},{data.y}");
+                }
+                _drops[data.x, data.y] = null;
+                var t1 = drop.View.transform.DOScale(Vector3.one*1.3f, .1f);
+                var t2 = drop.View.transform.DOScale(Vector3.zero, .2f).OnKill(() =>
+                {
+                    _dropPool.Unspawn(drop);
+                });
+
+                seq.Join(DOTween.Sequence().Append(t1).Append(t2));
+            }
+
+            seq.OnKill(() =>
+            {
+                Tidy();
+            });
+        }
+
+        public void Tidy()
+        {
+            var seq = DOTween.Sequence();
+            var _size = _logic.GetSize();
+            
+            bool needTidy = false;
+            for (int x = 0; x < _size; x++)
+            {
+                for (int y = 0; y < _size; y++)
+                {
+                    if (_drops[x,y] != null)
+                    {
+                        var drop = _drops[x,y];
+                        for (int z = 0; z < y; z++)
+                        {
+                            if (_drops[x,z] == null)
+                            {
+                                needTidy = true;
+                                _drops[x,z] = drop;
+                                _drops[x,y] = null;
+                                seq.Join(drop.View.transform.DOLocalMove(grid.GetOrigin() + new Vector2(x, z), .3f).SetEase(Ease.InQuad));
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (needTidy)
+            {
+                seq.OnKill(() =>
+                {
+                    GameEvent.Get<IEventBattle>().MatchEnd();
+                });
+            }
+            else
+            {
+                GameEvent.Get<IEventBattle>().MatchEnd();
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace GameLogic
     {
         private DropData _newDrop;
         private int _size;
-        private DropData[][] _dropMatrix;
+        private DropData[,] _dropMatrix;
         private IFsm<IBattleLogic> _fsm;
         
         public void Init(int size)
@@ -20,16 +20,13 @@ namespace GameLogic
             }
             _fsm = GameModule.Fsm.CreateFsm(this, new List<FsmState<IBattleLogic>>()
             {
+                new LogicStateReady(),
                 new LogicStateWait(),
                 new LogicStateMatch(),
             });
             
             _size = size;
-            _dropMatrix = new DropData[size][];
-            for (int x = 0; x < size; x++)
-            {
-                _dropMatrix[x] = new DropData[size];
-            }
+            _dropMatrix = new DropData[size,size];
         }
         
         public int GetSize()
@@ -39,7 +36,7 @@ namespace GameLogic
 
         public void Start()
         {
-            _fsm.Start<LogicStateWait>();
+            _fsm.Start<LogicStateReady>();
         }
 
         public DropData NewDrop()
@@ -49,33 +46,90 @@ namespace GameLogic
             return _newDrop;
         }
 
-        public void DropDown(int x)
+        public bool DropDown(int x)
         {
-            // 如果当前列已经满了 无法下落
-            var col = _dropMatrix[x];
-            if (col[_size-1] != null)
+            if (_dropMatrix[x, _size-1] != null)
             {
                 Log.Debug("col full");
-                return;
+                return false;
             }
 
             for (int y = 0; y < _size; y++)
             {
-                if (col[y] == null)
+                if (_dropMatrix[x, y] == null)
                 {
                     _newDrop.x = x;
                     _newDrop.y = y;
-                    col[y] = _newDrop;
+                    _dropMatrix[x, y] = _newDrop;
                     _newDrop = null;
                     GameEvent.Get<IEventBattle>().DropDownStart(x, y);
                     break;
                 }
             }
+
+            return true;
         }
 
-        public void Match()
+        public List<DropData> Match()
         {
-            throw new System.NotImplementedException();
+            var list = new List<DropData>();
+            
+            // 先计算每行有多少
+            var xCount = new int[_size];
+            var yCount = new int[_size];
+            for (int x = 0; x < _size; x++)
+            {
+                for (int y = 0; y < _size; y++)
+                {
+                    if (_dropMatrix[x,y] != null)
+                    {
+                        xCount[x] += 1;
+                        yCount[y] += 1;
+                    }
+                }
+            }
+            
+            // 匹配数字
+            for (int x = 0; x < _size; x++)
+            {
+                for (int y = 0; y < _size; y++)
+                {
+                    if (_dropMatrix[x,y] != null)
+                    {
+                        var drop = _dropMatrix[x,y];
+                        if (drop.num == xCount[x] || drop.num == yCount[y])
+                        {
+                            list.Add(drop);
+                            _dropMatrix[x, y] = null;
+                        }
+                    }
+                }
+            }
+            
+            // 整理
+            for (int x = 0; x < _size; x++)
+            {
+                for (int y = 0; y < _size; y++)
+                {
+                    if (_dropMatrix[x,y] != null)
+                    {
+                        var drop = _dropMatrix[x,y];
+                        for (int z = 0; z < y; z++)
+                        {
+                            if (_dropMatrix[x,z] == null)
+                            {
+                                drop.x = x;
+                                drop.y = z;
+                                _dropMatrix[x,z] = drop;
+                                _dropMatrix[x,y] = null;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return list;
         }
     }
 }

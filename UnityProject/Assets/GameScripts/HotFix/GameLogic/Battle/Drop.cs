@@ -29,7 +29,7 @@ namespace GameLogic
 
         public void Reset()
         {
-            _data = default;
+            _data = null;
             _view.Reset();
         }
 

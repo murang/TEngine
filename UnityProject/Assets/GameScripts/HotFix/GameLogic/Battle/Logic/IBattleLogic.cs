@@ -23,7 +23,7 @@ namespace GameLogic
         int GetSize();
         void Start();
         DropData NewDrop();
-        void DropDown(int x);
-        void Match();
+        bool DropDown(int x);
+        List<DropData> Match();
     }
 }
