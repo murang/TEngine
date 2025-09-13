@@ -9,11 +9,14 @@ namespace GameLogic
     {
         public int x;
         public int y;
-        public int type;
-        public int num;
+        public int block; // 0-2
+        public int num; // 1-7
         public void Clear()
         {
-            
+            x = 0;
+            y = 0;
+            block = 0;
+            num = 0;
         }
     }
     

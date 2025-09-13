@@ -9,27 +9,38 @@ namespace GameLogic
     public class DropView : MonoBehaviour
     {
         public TMP_Text txtNum;
-        
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+
+        private DropData _data;
 
         // Update is called once per frame
         void Update()
         {
-        
+            if (_data == null)
+            {
+                return;
+            }
+            if (_data.block == 2)
+            {
+                txtNum.text = "!";
+            }else if (_data.block == 1)
+            {
+                txtNum.text = "?";
+            }
+            else
+            {
+                txtNum.text = _data.num.ToString();
+            }
         }
 
         public void SetData(DropData data)
         {
-            txtNum.text = data.num.ToString();
+            _data = data;
         }
 
         public void Reset()
         {
-            
+            _data = null;
+            txtNum.text = "";
         }
     }
 }

@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TEngine;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GameLogic
 {
@@ -43,6 +45,10 @@ namespace GameLogic
         {
             _newDrop = MemoryPool.Acquire<DropData>();
             _newDrop.num = Random.Range(1, _size + 1);
+            if (Random.value > .8f)
+            {
+                _newDrop.block = 2;
+            }
             return _newDrop;
         }
 
