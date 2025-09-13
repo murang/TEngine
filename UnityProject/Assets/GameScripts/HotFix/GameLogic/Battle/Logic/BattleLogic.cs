@@ -7,30 +7,31 @@ using Random = UnityEngine.Random;
 
 namespace GameLogic
 {
-    public class BattleLogic: IBattleLogic
+    public class BattleLogic : IBattleLogic
     {
         private DropData _newDrop;
         private int _size;
         private DropData[,] _dropMatrix;
         private IFsm<IBattleLogic> _fsm;
-        
+
         public void Init(int size)
         {
             if (_fsm is not null)
             {
                 GameModule.Fsm.DestroyFsm(_fsm);
             }
+
             _fsm = GameModule.Fsm.CreateFsm(this, new List<FsmState<IBattleLogic>>()
             {
                 new LogicStateReady(),
                 new LogicStateWait(),
                 new LogicStateMatch(),
             });
-            
+
             _size = size;
-            _dropMatrix = new DropData[size,size];
+            _dropMatrix = new DropData[size, size];
         }
-        
+
         public int GetSize()
         {
             return _size;
@@ -54,7 +55,7 @@ namespace GameLogic
 
         public bool DropDown(int x)
         {
-            if (_dropMatrix[x, _size-1] != null)
+            if (_dropMatrix[x, _size - 1] != null)
             {
                 Log.Debug("col full");
                 return false;
@@ -78,38 +79,75 @@ namespace GameLogic
 
         public List<DropData> Match()
         {
-            var list = new List<DropData>();
+            // 规则是每个cell横竖连接cell的数量等于这个cell的数字 这个cell就能被消掉
             
-            // 先计算每行有多少
+            // 用字典方便去重
+            Dictionary<(int, int), DropData> dataDic = new Dictionary<(int, int), DropData>();
+            
+            // 先算列
             var xCount = new int[_size];
-            var yCount = new int[_size];
             for (int x = 0; x < _size; x++)
             {
                 for (int y = 0; y < _size; y++)
                 {
-                    if (_dropMatrix[x,y] != null)
+                    if (_dropMatrix[x, y] != null)
                     {
                         xCount[x] += 1;
-                        yCount[y] += 1;
+                    }
+                }
+            }
+
+            for (int x = 0; x < _size; x++)
+            {
+                for (int y = 0; y < _size; y++)
+                {
+                    if (_dropMatrix[x, y] != null && _dropMatrix[x, y].num == xCount[x])
+                    {
+                        dataDic[(x, y)] = _dropMatrix[x, y];
+                    }
+                }
+            }
+
+            // 再算行
+            for (int y = 0; y < _size; y++)
+            {
+                int tag = 0;
+                for (int x = 0; x < _size; x++)
+                {
+                    if (_dropMatrix[x, y] == null)
+                    {
+                        // 如果为空 就可以判断之前的是否匹配
+                        int matchNum = x - tag;
+                        for (int i = tag; i < x; i++)
+                        {
+                            if (_dropMatrix[i, y].num == matchNum) // 讲道理_dropMatrix[i, y]不应该为空
+                            {
+                                dataDic[(i, y)] = _dropMatrix[i, y];
+                            }
+                        }
+                        tag = x + 1;
+                    }
+                }
+                // 如果最后一个不为空 也需要判断
+                if (tag < _size)
+                {
+                    int matchNum = _size - tag;
+                    for (int i = tag; i < _size; i++)
+                    {
+                        if (_dropMatrix[i, y].num == matchNum) // 讲道理_dropMatrix[i, y]不应该为空
+                        {
+                            dataDic[(i, y)] = _dropMatrix[i, y];
+                        }
                     }
                 }
             }
             
-            // 匹配数字
-            for (int x = 0; x < _size; x++)
+            // 置空
+            var list = new List<DropData>();
+            foreach (var kv in dataDic)
             {
-                for (int y = 0; y < _size; y++)
-                {
-                    if (_dropMatrix[x,y] != null)
-                    {
-                        var drop = _dropMatrix[x,y];
-                        if (drop.num == xCount[x] || drop.num == yCount[y])
-                        {
-                            list.Add(drop);
-                            _dropMatrix[x, y] = null;
-                        }
-                    }
-                }
+                list.Add(kv.Value);
+                _dropMatrix[kv.Value.x, kv.Value.y] = null;
             }
             
             // 整理
@@ -117,23 +155,25 @@ namespace GameLogic
             {
                 for (int y = 0; y < _size; y++)
                 {
-                    if (_dropMatrix[x,y] != null)
+                    if (_dropMatrix[x, y] != null)
                     {
-                        var drop = _dropMatrix[x,y];
+                        var drop = _dropMatrix[x, y];
                         for (int z = 0; z < y; z++)
                         {
-                            if (_dropMatrix[x,z] == null)
+                            if (_dropMatrix[x, z] == null)
                             {
                                 drop.x = x;
                                 drop.y = z;
-                                _dropMatrix[x,z] = drop;
-                                _dropMatrix[x,y] = null;
+                                _dropMatrix[x, z] = drop;
+                                _dropMatrix[x, y] = null;
                                 break;
                             }
                         }
                     }
                 }
             }
+
+            
 
             return list;
         }
