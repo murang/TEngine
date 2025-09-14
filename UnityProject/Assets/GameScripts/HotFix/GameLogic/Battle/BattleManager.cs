@@ -41,7 +41,6 @@ namespace GameLogic
 
         private void OnDestroy()
         {
-            GameModule.Fsm.DestroyFsm(_fsm);
             GameModule.ObjectPool.DestroyObjectPool<Drop>();
             _logic = null;
         }
@@ -78,6 +77,7 @@ namespace GameLogic
                 _dropPool.Register(_newDrop, true);
             }
             
+            _newDrop.View.transform.localScale = Vector3.one;
             _newDrop.View.transform.SetLocalPositionAndRotation(grid.bottomCenter + new Vector2(0, _logic.GetSize() +0.5f), Quaternion.identity);
         }
 
@@ -106,26 +106,16 @@ namespace GameLogic
                     throw new Exception($"MatchStart Drop is null pos: {action.x},{action.y}");
                 }
 
-                switch (action.type)
-                {
-                    case DropActionType.Clear:
-                        _drops[action.x, action.y] = null;
-                        var t1 = drop.View.transform.DOScale(Vector3.one*1.3f, .1f);
-                        var t2 = drop.View.transform.DOScale(Vector3.zero, .2f).OnKill(() =>
-                        {
-                            _dropPool.Unspawn(drop);
-                        });
-                        seq.Join(DOTween.Sequence().Append(t1).Append(t2));
-                        break;
-                    case DropActionType.ShowNumber:
-                        break;
-                    case DropActionType.BlockBreak:
-                        break;
-                    default:
-                        Log.Error("???");
-                        break;
+                var actioMove = drop.DoAction(action);
+                if (action.type == DropActionType.Clear)
+                {   // 消除
+                    _drops[action.x, action.y] = null;
+                    actioMove.OnKill(() =>
+                    {
+                        _dropPool.Unspawn(drop);
+                    });
                 }
-                
+                seq.Join(actioMove);
             }
 
             seq.OnKill(() =>

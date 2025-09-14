@@ -14,7 +14,7 @@ namespace GameLogic
         private DropData[,] _dropMatrix;
         private IFsm<IBattleLogic> _fsm;
         
-        const float blockRate = .0f;
+        const float blockRate = .3f;
 
         public void Init(int size)
         {
@@ -158,7 +158,8 @@ namespace GameLogic
                     }
                 }
             }
-            
+
+            var blockActioDic = new Dictionary<(int, int), DropAction>();
             foreach (var kv in actionDic)
             {
                 int x = kv.Value.x;
@@ -169,25 +170,30 @@ namespace GameLogic
                 // 上
                 if (y < _size - 1)
                 {
-                    checkAroundBlock(x, y + 1, actionDic);
+                    checkAroundBlock(x, y + 1, blockActioDic);
                 }
                 // 下
                 if (y > 0)
                 {
-                    checkAroundBlock(x, y - 1, actionDic);
+                    checkAroundBlock(x, y - 1, blockActioDic);
                 }
                 // 左
                 if (x > 0)
                 {
-                    checkAroundBlock(x - 1, y, actionDic);
+                    checkAroundBlock(x - 1, y, blockActioDic);
                 }
                 // 上
                 if (x < _size - 1)
                 {
-                    checkAroundBlock(x + 1, y, actionDic);
+                    checkAroundBlock(x + 1, y, blockActioDic);
                 }
             }
-            
+
+            foreach (var kv in blockActioDic)
+            {
+                actionDic[kv.Key] = kv.Value;
+            }
+
             // 整理
             for (int x = 0; x < _size; x++)
             {
@@ -220,16 +226,16 @@ namespace GameLogic
             return list;
         }
 
-        private void checkAroundBlock(int x, int y, Dictionary<(int, int), DropAction> actionDic)
+        private void checkAroundBlock(int x, int y, Dictionary<(int, int), DropAction> blockDic)
         {
-            if (_dropMatrix[x, y] == null || actionDic.ContainsKey((x, y))  || _dropMatrix[x, y].block == 0)
+            if (_dropMatrix[x, y] == null || blockDic.ContainsKey((x, y))  || _dropMatrix[x, y].block == 0)
             {
                 return;
             }
             _dropMatrix[x, y].block--;
             if (_dropMatrix[x,  y].block == 0)
             {
-                actionDic[(x, y)] = new DropAction
+                blockDic[(x, y)] = new DropAction
                 {
                     x = x,
                     y = y,
@@ -237,7 +243,7 @@ namespace GameLogic
                 };
             }else if (_dropMatrix[x, y].block == 1)
             {
-                actionDic[(x, y)] = new DropAction
+                blockDic[(x, y)] = new DropAction
                 {
                     x = x,
                     y = y,

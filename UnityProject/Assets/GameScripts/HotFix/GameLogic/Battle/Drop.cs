@@ -15,7 +15,7 @@ namespace GameLogic
         {
             var d = MemoryPool.Acquire<Drop>();
             d._view = view;
-            d.Initialize(d._view.name, d._view);
+            d.Initialize(d._view);
             return d;
         }
         
@@ -26,15 +26,44 @@ namespace GameLogic
             _data = data;
             _view.SetData(data);
         }
-        
-        protected override void Release(bool isShutdown)
+
+        protected override void OnUnspawn()
         {
             MemoryPool.Release(_data);
-            if (_view is not null && !isShutdown)
+            _data = null;
+        }
+
+        protected override void Release(bool isShutdown)
+        {
+        }
+
+        public Sequence DoAction(DropAction action)
+        {
+            var seq = DOTween.Sequence();
+            
+            switch (action.type)
             {
-                Object.DestroyImmediate(_view.gameObject);
-                _view = null;
+                case DropActionType.Clear:
+                    var t1 = _view.transform.DOScale(Vector3.one*1.3f, .1f);
+                    var t2 = _view.transform.DOScale(Vector3.zero, .2f);
+                    seq.Join(DOTween.Sequence().Append(t1).Append(t2));
+                    break;
+                case DropActionType.ShowNumber:
+                    var t3 = _view.transform.DOScale(Vector3.one*1.3f, .1f);
+                    var t4 = _view.transform.DOScale(Vector3.one, .2f);
+                    seq.Join(DOTween.Sequence().Append(t3).Append(t4));
+                    break;
+                case DropActionType.BlockBreak:
+                    var t5 = _view.transform.DOScale(Vector3.one*1.3f, .1f);
+                    var t6 = _view.transform.DOScale(Vector3.one, .2f);
+                    seq.Join(DOTween.Sequence().Append(t5).Append(t6));
+                    break;
+                default:
+                    Log.Error("???");
+                    break;
             }
+            
+            return seq;
         }
     }
 }
