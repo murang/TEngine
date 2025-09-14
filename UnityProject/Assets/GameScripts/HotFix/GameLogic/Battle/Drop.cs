@@ -26,15 +26,10 @@ namespace GameLogic
             _data = data;
             _view.SetData(data);
         }
-
-        public void Reset()
-        {
-            _data = null;
-            _view.Reset();
-        }
-
+        
         protected override void Release(bool isShutdown)
         {
+            MemoryPool.Release(_data);
             if (_view is not null && !isShutdown)
             {
                 Object.DestroyImmediate(_view.gameObject);

@@ -19,6 +19,20 @@ namespace GameLogic
             num = 0;
         }
     }
+
+    public enum DropActionType
+    {
+        BlockBreak,
+        ShowNumber,
+        Clear,
+    }
+    
+    public struct DropAction
+    {
+        public int x;
+        public int y;
+        public DropActionType type;
+    }
     
     public interface IBattleLogic
     {
@@ -27,6 +41,6 @@ namespace GameLogic
         void Start();
         DropData NewDrop();
         bool DropDown(int x);
-        List<DropData> Match();
+        List<DropAction> Match();
     }
 }

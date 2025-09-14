@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TEngine;
@@ -26,10 +27,10 @@ namespace GameLogic
 
         void MatchLoop()
         {
-            var matchList = _logic.Match();
-            if (matchList.Count > 0)
+            var actionList = _logic.Match();
+            if (actionList.Count > 0)
             {
-                GameEvent.Get<IEventBattle>().MatchStart(matchList);
+                GameEvent.Get<IEventBattle>().MatchStart(actionList);
             }
             else
             {

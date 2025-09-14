@@ -68,7 +68,6 @@ namespace GameLogic
             if (_dropPool.CanSpawn())
             {
                 _newDrop = _dropPool.Spawn();
-                _newDrop.Reset();
                 _newDrop.SetData(data);
             }
             else
@@ -95,25 +94,38 @@ namespace GameLogic
             _newDrop = null;
         }
 
-        public void MatchStart(List<DropData> list)
+        public void MatchStart(List<DropAction> list)
         {
             var seq = DOTween.Sequence();
             for (int i = 0; i < list.Count; i++)
             {
-                var data = list[i];
-                var drop = _drops[data.x,data.y];
+                var action = list[i];
+                var drop = _drops[action.x,action.y];
                 if (drop == null)
                 {
-                    throw new Exception($"MatchStart Drop is null pos: {data.x},{data.y}");
+                    throw new Exception($"MatchStart Drop is null pos: {action.x},{action.y}");
                 }
-                _drops[data.x, data.y] = null;
-                var t1 = drop.View.transform.DOScale(Vector3.one*1.3f, .1f);
-                var t2 = drop.View.transform.DOScale(Vector3.zero, .2f).OnKill(() =>
-                {
-                    _dropPool.Unspawn(drop);
-                });
 
-                seq.Join(DOTween.Sequence().Append(t1).Append(t2));
+                switch (action.type)
+                {
+                    case DropActionType.Clear:
+                        _drops[action.x, action.y] = null;
+                        var t1 = drop.View.transform.DOScale(Vector3.one*1.3f, .1f);
+                        var t2 = drop.View.transform.DOScale(Vector3.zero, .2f).OnKill(() =>
+                        {
+                            _dropPool.Unspawn(drop);
+                        });
+                        seq.Join(DOTween.Sequence().Append(t1).Append(t2));
+                        break;
+                    case DropActionType.ShowNumber:
+                        break;
+                    case DropActionType.BlockBreak:
+                        break;
+                    default:
+                        Log.Error("???");
+                        break;
+                }
+                
             }
 
             seq.OnKill(() =>

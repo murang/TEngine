@@ -13,6 +13,8 @@ namespace GameLogic
         private int _size;
         private DropData[,] _dropMatrix;
         private IFsm<IBattleLogic> _fsm;
+        
+        const float blockRate = .0f;
 
         public void Init(int size)
         {
@@ -46,7 +48,7 @@ namespace GameLogic
         {
             _newDrop = MemoryPool.Acquire<DropData>();
             _newDrop.num = Random.Range(1, _size + 1);
-            if (Random.value > .8f)
+            if (Random.value < blockRate)
             {
                 _newDrop.block = 2;
             }
@@ -77,12 +79,12 @@ namespace GameLogic
             return true;
         }
 
-        public List<DropData> Match()
+        public List<DropAction> Match()
         {
             // 规则是每个cell横竖连接cell的数量等于这个cell的数字 这个cell就能被消掉
             
             // 用字典方便去重
-            Dictionary<(int, int), DropData> dataDic = new Dictionary<(int, int), DropData>();
+            Dictionary<(int, int), DropAction> actionDic = new Dictionary<(int, int), DropAction>();
             
             // 先算列
             var xCount = new int[_size];
@@ -101,9 +103,14 @@ namespace GameLogic
             {
                 for (int y = 0; y < _size; y++)
                 {
-                    if (_dropMatrix[x, y] != null && _dropMatrix[x, y].num == xCount[x])
+                    if (_dropMatrix[x, y] != null && _dropMatrix[x, y].block == 0 && _dropMatrix[x, y].num == xCount[x])
                     {
-                        dataDic[(x, y)] = _dropMatrix[x, y];
+                        actionDic[(x, y)] = new DropAction
+                        {
+                            x = x,
+                            y = y,
+                            type = DropActionType.Clear
+                        };
                     }
                 }
             }
@@ -120,9 +127,14 @@ namespace GameLogic
                         int matchNum = x - tag;
                         for (int i = tag; i < x; i++)
                         {
-                            if (_dropMatrix[i, y].num == matchNum) // 讲道理_dropMatrix[i, y]不应该为空
+                            if (_dropMatrix[i, y].block == 0 && _dropMatrix[i, y].num == matchNum) // 讲道理_dropMatrix[i, y]不应该为空
                             {
-                                dataDic[(i, y)] = _dropMatrix[i, y];
+                                actionDic[(i, y)] = new DropAction
+                                {
+                                    x = i,
+                                    y = y,
+                                    type = DropActionType.Clear
+                                };
                             }
                         }
                         tag = x + 1;
@@ -134,20 +146,46 @@ namespace GameLogic
                     int matchNum = _size - tag;
                     for (int i = tag; i < _size; i++)
                     {
-                        if (_dropMatrix[i, y].num == matchNum) // 讲道理_dropMatrix[i, y]不应该为空
+                        if (_dropMatrix[i, y].block == 0 && _dropMatrix[i, y].num == matchNum) // 讲道理_dropMatrix[i, y]不应该为空
                         {
-                            dataDic[(i, y)] = _dropMatrix[i, y];
+                            actionDic[(i, y)] = new DropAction
+                            {
+                                x = i,
+                                y = y,
+                                type = DropActionType.Clear
+                            };
                         }
                     }
                 }
             }
             
-            // 置空
-            var list = new List<DropData>();
-            foreach (var kv in dataDic)
+            foreach (var kv in actionDic)
             {
-                list.Add(kv.Value);
-                _dropMatrix[kv.Value.x, kv.Value.y] = null;
+                int x = kv.Value.x;
+                int y = kv.Value.y;
+                
+                _dropMatrix[x, y] = null;
+                // 周围的block修改
+                // 上
+                if (y < _size - 1)
+                {
+                    checkAroundBlock(x, y + 1, actionDic);
+                }
+                // 下
+                if (y > 0)
+                {
+                    checkAroundBlock(x, y - 1, actionDic);
+                }
+                // 左
+                if (x > 0)
+                {
+                    checkAroundBlock(x - 1, y, actionDic);
+                }
+                // 上
+                if (x < _size - 1)
+                {
+                    checkAroundBlock(x + 1, y, actionDic);
+                }
             }
             
             // 整理
@@ -173,9 +211,43 @@ namespace GameLogic
                 }
             }
 
+            var list = new List<DropAction>();
+            foreach(var v in actionDic.Values)
+            {
+              list.Add(v);  
+            }
             
-
             return list;
+        }
+
+        private void checkAroundBlock(int x, int y, Dictionary<(int, int), DropAction> actionDic)
+        {
+            if (_dropMatrix[x, y] == null || actionDic.ContainsKey((x, y))  || _dropMatrix[x, y].block == 0)
+            {
+                return;
+            }
+            _dropMatrix[x, y].block--;
+            if (_dropMatrix[x,  y].block == 0)
+            {
+                actionDic[(x, y)] = new DropAction
+                {
+                    x = x,
+                    y = y,
+                    type = DropActionType.ShowNumber
+                };
+            }else if (_dropMatrix[x, y].block == 1)
+            {
+                actionDic[(x, y)] = new DropAction
+                {
+                    x = x,
+                    y = y,
+                    type = DropActionType.BlockBreak
+                };
+            }
+            else
+            {
+                Log.Error("???");
+            }
         }
     }
 }

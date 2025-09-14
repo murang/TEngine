@@ -36,11 +36,5 @@ namespace GameLogic
         {
             _data = data;
         }
-
-        public void Reset()
-        {
-            _data = null;
-            txtNum.text = "";
-        }
     }
 }

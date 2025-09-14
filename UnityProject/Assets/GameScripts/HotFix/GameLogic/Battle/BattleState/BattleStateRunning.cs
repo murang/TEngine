@@ -17,7 +17,7 @@ namespace GameLogic
         {
             GameEvent.AddEventListener<DropData>(IEventBattle_Event.ShowNewDrop, _manager.ShowNewDrop);
             GameEvent.AddEventListener<int, int>(IEventBattle_Event.DropDownStart, _manager.DropDown);
-            GameEvent.AddEventListener<List<DropData>>(IEventBattle_Event.MatchStart, _manager.MatchStart);
+            GameEvent.AddEventListener<List<DropAction>>(IEventBattle_Event.MatchStart, _manager.MatchStart);
             
             _manager.StartGame();
             GameModule.UI.HideUI<BattleUI>();
@@ -27,7 +27,7 @@ namespace GameLogic
         {
             GameEvent.RemoveEventListener<DropData>(IEventBattle_Event.ShowNewDrop, _manager.ShowNewDrop);
             GameEvent.RemoveEventListener<int, int>(IEventBattle_Event.DropDownStart, _manager.DropDown);
-            GameEvent.RemoveEventListener<List<DropData>>(IEventBattle_Event.MatchStart, _manager.MatchStart);
+            GameEvent.RemoveEventListener<List<DropAction>>(IEventBattle_Event.MatchStart, _manager.MatchStart);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace GameLogic
         void TouchGrid(int x);
         void DropDownStart(int x, int y);
         void DropDownEnd();
-        void MatchStart(List<DropData> list);
+        void MatchStart(List<DropAction> list);
         void MatchEnd();
         void BlockStart();
         void BlockEnd();
