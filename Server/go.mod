@@ -5,7 +5,7 @@ go 1.25.1
 require (
 	github.com/murang/potato v0.0.5
 	github.com/planetscale/vtprotobuf v0.6.0
-	google.golang.org/protobuf v1.33.0
+	google.golang.org/protobuf v1.36.9
 )
 
 require (

@@ -17,13 +17,6 @@ namespace GameLogic
         }
         #endregion
 
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            MsgMeta.RegisterMsgMeta((int)Pb.MsgId.C2SHello, typeof(Pb.C2S_Hello));
-            MsgMeta.RegisterMsgMeta((int)Pb.MsgId.S2CHello, typeof(Pb.S2C_Hello));
-        }
-
         #region 事件
         private void OnClickLoginBtn()
         {
