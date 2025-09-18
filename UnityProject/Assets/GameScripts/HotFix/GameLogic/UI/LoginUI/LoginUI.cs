@@ -1,4 +1,5 @@
 ﻿using System;
+using Pb;
 using UnityEngine;
 using UnityEngine.UI;
 using TEngine;
@@ -27,7 +28,11 @@ namespace GameLogic
                 
             var msg = new Pb.C2S_Hello
             {
-                Name = "niceman"
+                Name = "niceman",
+                User = new UserInfo
+                {
+                    Id = 666
+                },
             };
             MsgDispatcher.Instance.RegisterMsgReceiver<Pb.C2S_Hello>(OnC2SHello);
             var codec = new CodecPb();
@@ -39,7 +44,7 @@ namespace GameLogic
                 ConnectTimeout = 5,
                 Timeout = 30
             };
-            var conn = new KcpConn(option);
+            var conn = new WsConn(option);
             conn.OnConnected += conn =>
             {
                 Log.Debug("Connected");

@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -7,7 +5,7 @@ using UnityEngine.Pool;
 namespace GameLogic
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class Grid : MonoBehaviour
+    public class GridView : MonoBehaviour
     {
         public GameObject gridCell;
         public Vector2 bottomCenter;

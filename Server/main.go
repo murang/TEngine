@@ -17,7 +17,7 @@ func main() {
 		MsgHandler:     &Handler{},     // 需要用户自己实现IMsgHandler 用于处理消息
 	})
 	// 网络监听器 支持tcp/kcp/ws
-	ln, _ := net.NewListener("kcp", ":10086")
+	ln, _ := net.NewListener("ws", ":10086")
 	// 添加网络监听器 可支持同时接收多个监听器消息 统一由MsgHandler处理
 	potato.GetNetManager().AddListener(ln)
 

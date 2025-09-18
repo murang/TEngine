@@ -24,14 +24,15 @@ namespace Pb {
     static GameReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgpnYW1lLnByb3RvEgJwYiIZCglDMlNfSGVsbG8SDAoEbmFtZRgBIAEoCSIn",
-            "CglTMkNfSGVsbG8SCwoDd2hvGAEgASgJEg0KBXNheUhpGAIgASgJKjIKBU1z",
-            "Z0lkEgsKB1Vua25vd24QABINCgljMnNfSGVsbG8QZBINCglzMmNfSGVsbG8Q",
-            "ZUIFWgMvcGJiBnByb3RvMw=="));
+            "CgpnYW1lLnByb3RvEgJwYhoJZGVmLnByb3RvIjUKCUMyU19IZWxsbxIMCgRu",
+            "YW1lGAEgASgJEhoKBHVzZXIYAiABKAsyDC5wYi5Vc2VySW5mbyInCglTMkNf",
+            "SGVsbG8SCwoDd2hvGAEgASgJEg0KBXNheUhpGAIgASgJKjIKBU1zZ0lkEgsK",
+            "B1Vua25vd24QABINCgljMnNfSGVsbG8QZBINCglzMmNfSGVsbG8QZUIFWgMv",
+            "cGJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { },
+          new pbr::FileDescriptor[] { global::Pb.DefReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Pb.MsgId), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.C2S_Hello), global::Pb.C2S_Hello.Parser, new[]{ "Name" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.C2S_Hello), global::Pb.C2S_Hello.Parser, new[]{ "Name", "User" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Pb.S2C_Hello), global::Pb.S2C_Hello.Parser, new[]{ "Who", "SayHi" }, null, null, null, null)
           }));
     }
@@ -84,6 +85,7 @@ namespace Pb {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public C2S_Hello(C2S_Hello other) : this() {
       name_ = other.name_;
+      user_ = other.user_ != null ? other.user_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -105,6 +107,18 @@ namespace Pb {
       }
     }
 
+    /// <summary>Field number for the "user" field.</summary>
+    public const int UserFieldNumber = 2;
+    private global::Pb.UserInfo user_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Pb.UserInfo User {
+      get { return user_; }
+      set {
+        user_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -121,6 +135,7 @@ namespace Pb {
         return true;
       }
       if (Name != other.Name) return false;
+      if (!object.Equals(User, other.User)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -129,6 +144,7 @@ namespace Pb {
     public override int GetHashCode() {
       int hash = 1;
       if (Name.Length != 0) hash ^= Name.GetHashCode();
+      if (user_ != null) hash ^= User.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -151,6 +167,10 @@ namespace Pb {
         output.WriteRawTag(10);
         output.WriteString(Name);
       }
+      if (user_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(User);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -165,6 +185,10 @@ namespace Pb {
         output.WriteRawTag(10);
         output.WriteString(Name);
       }
+      if (user_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(User);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -177,6 +201,9 @@ namespace Pb {
       int size = 0;
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (user_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(User);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -192,6 +219,12 @@ namespace Pb {
       }
       if (other.Name.Length != 0) {
         Name = other.Name;
+      }
+      if (other.user_ != null) {
+        if (user_ == null) {
+          User = new global::Pb.UserInfo();
+        }
+        User.MergeFrom(other.User);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -216,6 +249,13 @@ namespace Pb {
             Name = input.ReadString();
             break;
           }
+          case 18: {
+            if (user_ == null) {
+              User = new global::Pb.UserInfo();
+            }
+            input.ReadMessage(User);
+            break;
+          }
         }
       }
     #endif
@@ -237,6 +277,13 @@ namespace Pb {
             break;
           case 10: {
             Name = input.ReadString();
+            break;
+          }
+          case 18: {
+            if (user_ == null) {
+              User = new global::Pb.UserInfo();
+            }
+            input.ReadMessage(User);
             break;
           }
         }

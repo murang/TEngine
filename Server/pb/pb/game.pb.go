@@ -73,6 +73,7 @@ func (MsgId) EnumDescriptor() ([]byte, []int) {
 type C2S_Hello struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	User          *UserInfo              `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -112,6 +113,13 @@ func (x *C2S_Hello) GetName() string {
 		return x.Name
 	}
 	return ""
+}
+
+func (x *C2S_Hello) GetUser() *UserInfo {
+	if x != nil {
+		return x.User
+	}
+	return nil
 }
 
 type S2C_Hello struct {
@@ -171,9 +179,10 @@ var File_game_proto protoreflect.FileDescriptor
 const file_game_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"game.proto\x12\x02pb\"\x1f\n" +
+	"game.proto\x12\x02pb\x1a\tdef.proto\"A\n" +
 	"\tC2S_Hello\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\"3\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12 \n" +
+	"\x04user\x18\x02 \x01(\v2\f.pb.UserInfoR\x04user\"3\n" +
 	"\tS2C_Hello\x12\x10\n" +
 	"\x03who\x18\x01 \x01(\tR\x03who\x12\x14\n" +
 	"\x05sayHi\x18\x02 \x01(\tR\x05sayHi*2\n" +
@@ -200,13 +209,15 @@ var file_game_proto_goTypes = []any{
 	(MsgId)(0),        // 0: pb.MsgId
 	(*C2S_Hello)(nil), // 1: pb.C2S_Hello
 	(*S2C_Hello)(nil), // 2: pb.S2C_Hello
+	(*UserInfo)(nil),  // 3: pb.UserInfo
 }
 var file_game_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	3, // 0: pb.C2S_Hello.user:type_name -> pb.UserInfo
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_game_proto_init() }
@@ -214,6 +225,7 @@ func file_game_proto_init() {
 	if File_game_proto != nil {
 		return
 	}
+	file_def_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

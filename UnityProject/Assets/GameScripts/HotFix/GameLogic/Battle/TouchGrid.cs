@@ -7,19 +7,19 @@ using UnityEngine.EventSystems;
 
 namespace GameLogic
 {
-    [RequireComponent(typeof(Grid))]
+    [RequireComponent(typeof(GridView))]
     public class TouchGrid : MonoBehaviour, IPointerClickHandler
     {
-        private Grid _grid;
+        private GridView _gridView;
         
         private void Start()
         {
-            _grid = GetComponent<Grid>();
+            _gridView = GetComponent<GridView>();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            var x = _grid.GetTouchX(eventData.position);
+            var x = _gridView.GetTouchX(eventData.position);
             GameEvent.Get<IEventBattle>().TouchGrid(x);
         }
     }

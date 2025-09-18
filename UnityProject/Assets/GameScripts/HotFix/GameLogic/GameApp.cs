@@ -36,6 +36,7 @@ public partial class GameApp
     {
         // GameEvent.Get<ILoginUI>().ShowLoginUI();
         GameModule.UI.ShowUIAsync<LoginUI>();
+        
         // GameModule.Scene.LoadScene("battle");
         // var ui =GameModule.UI; // 把ui root固定下来
     }

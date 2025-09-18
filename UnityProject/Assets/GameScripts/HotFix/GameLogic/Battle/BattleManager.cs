@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TEngine;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Ease = DG.Tweening.Ease;
 
 namespace GameLogic
@@ -11,7 +12,8 @@ namespace GameLogic
     public class BattleManager : MonoBehaviour
     {
         public GameObject prefabDropView;
-        public Grid grid;
+        [FormerlySerializedAs("grid")]
+        public GridView gridView;
         
         private Drop _newDrop;
         private Drop[,] _drops;
@@ -49,7 +51,7 @@ namespace GameLogic
         {
             _drops = new Drop[BattleConst.GridSize,BattleConst.GridSize];
             _logic.Init(BattleConst.GridSize);
-            grid?.Build(_logic);
+            gridView?.Build(_logic);
         }
         
         public void StartGame()
@@ -71,21 +73,21 @@ namespace GameLogic
             }
             else
             {
-                var view = Instantiate(prefabDropView, grid.transform);
+                var view = Instantiate(prefabDropView, gridView.transform);
                 _newDrop = Drop.Create(view.GetComponent<DropView>());
                 _newDrop.SetData(data);
                 _dropPool.Register(_newDrop, true);
             }
             
             _newDrop.View.transform.localScale = Vector3.one;
-            _newDrop.View.transform.SetLocalPositionAndRotation(grid.bottomCenter + new Vector2(0, _logic.GetSize() +0.5f), Quaternion.identity);
+            _newDrop.View.transform.SetLocalPositionAndRotation(gridView.bottomCenter + new Vector2(0, _logic.GetSize() +0.5f), Quaternion.identity);
         }
 
         public void DropDown(int x, int y)
         {
             _drops[x,y] = _newDrop;
-            _newDrop.View.transform.SetLocalPositionAndRotation(grid.GetOrigin() + new Vector2(x, _logic.GetSize() - 0.5f), Quaternion.identity);
-            _newDrop.View.transform.DOLocalMove(grid.GetOrigin() + new Vector2(x, y), .5f)
+            _newDrop.View.transform.SetLocalPositionAndRotation(gridView.GetOrigin() + new Vector2(x, _logic.GetSize() - 0.5f), Quaternion.identity);
+            _newDrop.View.transform.DOLocalMove(gridView.GetOrigin() + new Vector2(x, y), .5f)
                 .SetEase(Ease.InQuad)
                 .OnKill(() =>
             {
@@ -144,7 +146,7 @@ namespace GameLogic
                                 needTidy = true;
                                 _drops[x,z] = drop;
                                 _drops[x,y] = null;
-                                seq.Join(drop.View.transform.DOLocalMove(grid.GetOrigin() + new Vector2(x, z), .3f).SetEase(Ease.InQuad));
+                                seq.Join(drop.View.transform.DOLocalMove(gridView.GetOrigin() + new Vector2(x, z), .3f).SetEase(Ease.InQuad));
                                 break;
                             }
                         }
