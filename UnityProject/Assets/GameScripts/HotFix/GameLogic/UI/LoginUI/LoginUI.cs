@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using TEngine;
 
@@ -16,14 +17,56 @@ namespace GameLogic
         }
         #endregion
 
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            MsgMeta.RegisterMsgMeta((int)Pb.MsgId.C2SHello, typeof(Pb.C2S_Hello));
+            MsgMeta.RegisterMsgMeta((int)Pb.MsgId.S2CHello, typeof(Pb.S2C_Hello));
+        }
+
         #region 事件
         private void OnClickLoginBtn()
         {
-            UIModule.Instance.CloseAll();
-            GameModule.Scene.LoadScene("battle");
-            UIModule.Instance.ShowUIAsync<BattleUI>();
+            // Log.Debug(ConfigSystem.Instance.Tables.TbItem.Get(10000).Desc);
+            // UIModule.Instance.CloseAll();
+            // GameModule.Scene.LoadScene("battle");
+            // UIModule.Instance.ShowUIAsync<BattleUI>();
+                
+            var msg = new Pb.C2S_Hello
+            {
+                Name = "niceman"
+            };
+            MsgDispatcher.Instance.RegisterMsgReceiver<Pb.C2S_Hello>(OnC2SHello);
+            var codec = new CodecPb();
+            var option = new ConnOption
+            {
+                Host = "127.0.0.1",
+                Port = 10086,
+                Codec = codec,
+                ConnectTimeout = 5,
+                Timeout = 30
+            };
+            var conn = new KcpConn(option);
+            conn.OnConnected += conn =>
+            {
+                Log.Debug("Connected");
+                conn.Send(msg);
+            };
+            conn.OnMessage += (conn, o) =>
+            {
+                MsgDispatcher.Instance.DispatchMsg(o);
+            };
+            conn.OnException += (conn1, exception) =>
+            {
+                Log.Error(exception.Message);
+            };
+            conn.Connect();
+        }
+        
+        void OnC2SHello(Pb.C2S_Hello msg)
+        {
+            Log.Debug("OnC2SHello =====> : " + msg);
         }
         #endregion
-
     }
 }

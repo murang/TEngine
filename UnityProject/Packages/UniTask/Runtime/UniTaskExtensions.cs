@@ -515,7 +515,7 @@ namespace Cysharp.Threading.Tasks
             {
                 (winArgIndex, taskResult, _) = await UniTask.WhenAny(task.SuppressCancellationThrow(), timeoutTask);
             }
-            catch
+            catch (Exception e)
             {
                 delayCancellationTokenSource.Cancel();
                 delayCancellationTokenSource.Dispose();
