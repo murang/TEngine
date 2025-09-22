@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks.Triggers;
 using DG.Tweening;
 using TEngine;
 using UnityEngine;
@@ -12,7 +13,6 @@ namespace GameLogic
     public class BattleManager : MonoBehaviour
     {
         public GameObject prefabDropView;
-        [FormerlySerializedAs("grid")]
         public GridView gridView;
         
         private Drop _newDrop;
@@ -44,6 +44,8 @@ namespace GameLogic
         private void OnDestroy()
         {
             GameModule.ObjectPool.DestroyObjectPool<Drop>();
+            GameModule.Fsm.DestroyFsm(_fsm);
+            _logic.OnDestroy();
             _logic = null;
         }
 

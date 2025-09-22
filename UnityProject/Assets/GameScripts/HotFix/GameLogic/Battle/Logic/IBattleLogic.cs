@@ -37,6 +37,7 @@ namespace GameLogic
     public interface IBattleLogic
     {
         void Init(int size);
+        void OnDestroy();
         int GetSize();
         void Start();
         DropData NewDrop();

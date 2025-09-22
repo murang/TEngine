@@ -34,6 +34,11 @@ namespace GameLogic
             _dropMatrix = new DropData[size, size];
         }
 
+        public void OnDestroy()
+        {
+            GameModule.Fsm.DestroyFsm(_fsm);
+        }
+        
         public int GetSize()
         {
             return _size;

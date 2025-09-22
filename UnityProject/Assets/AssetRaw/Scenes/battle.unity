@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabDropView: {fileID: 2773017142518532466, guid: 489edca8f1cca4e8e88db8479cc174c0, type: 3}
-  grid: {fileID: 1368483874}
+  gridView: {fileID: 1368483874}
 --- !u!4 &255965895
 Transform:
   m_ObjectHideFlags: 0
