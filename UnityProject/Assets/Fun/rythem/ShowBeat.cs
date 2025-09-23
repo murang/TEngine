@@ -27,7 +27,7 @@ public class ShowBeat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _beatInterval = bpm / 60f;
+        _beatInterval = 60f/bpm;
     }
 
     // Update is called once per frame
@@ -46,6 +46,11 @@ public class ShowBeat : MonoBehaviour
         }
 
         if (!_audioSource.isPlaying)
+        {
+            return;
+        }
+
+        if (_audioSource.time < offset - showTime)
         {
             return;
         }
