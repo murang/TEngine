@@ -236,9 +236,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2d9a0beefe94459a46b6f69e00a1e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: 4c61201c59c6841d58d4ac19b1217f6f, type: 3}
-  bpm: 123.046875
-  offset: 1.277
+  audioClip: {fileID: 8300000, guid: 163ac7077de2e4c3bbcc42cad368f46f, type: 3}
+  bpm: 117.453835
+  offset: 2.530975
   show: {fileID: 597436770}
   showTime: 0.1
 --- !u!4 &1052758024
@@ -250,7 +250,7 @@ Transform:
   m_GameObject: {fileID: 1052758022}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.9598522, y: -2.9175944, z: -0.06504274}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -266,10 +266,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4c61201c59c6841d58d4ac19b1217f6f, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 0.5
   Loop: 0
   Mute: 0
   Spatialize: 0

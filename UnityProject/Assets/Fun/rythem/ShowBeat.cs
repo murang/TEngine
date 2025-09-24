@@ -3,31 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using GameLogic;
+using TEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class ShowBeat : MonoBehaviour
 {
-    public AudioClip audioClip;
-    public float bpm = 117.45f;
-    public float offset = 2.53f;
+    public string clip = "rythem2";
+    public double bpm = 123.046875d;
+    public double offset = 1.27709750d;
     public SpriteRenderer show;
     public float showTime = .1f;
     
-    private float _beatInterval;
-    private AudioSource _audioSource;
     private bool _isShow;
 
     private void Awake()
     {
         Application.targetFrameRate = 60;
-        _audioSource = GetComponent<AudioSource>();
-        _audioSource.clip = audioClip;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        _beatInterval = 60f/bpm;
+        BeatManager.Instance.LoadClip(clip, bpm, offset);
     }
 
     // Update is called once per frame
@@ -35,29 +33,30 @@ public class ShowBeat : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (_audioSource.isPlaying)
+            if (BeatManager.Instance.IsPlaying)
             {
-                _audioSource.Pause();
+                BeatManager.Instance.Pause();
             }
             else
             {
-                _audioSource.Play();
+                if (BeatManager.Instance.IsPaused)
+                {
+                    BeatManager.Instance.Resume();
+                }
+                else
+                {
+                    BeatManager.Instance.Play();
+                }
             }
         }
 
-        if (!_audioSource.isPlaying)
-        {
-            return;
-        }
-
-        if (_audioSource.time < offset - showTime)
+        if (!BeatManager.Instance.IsPlaying)
         {
             return;
         }
         
-        var _dspTime = AudioSettings.dspTime - offset - showTime;
-
-        if (!_isShow && _dspTime%_beatInterval < showTime)
+        var beatInfo = BeatManager.Instance.GetBeatInfo();
+        if (!_isShow && beatInfo.TimeToNextBeat < showTime)
         {
             Show();
         }
