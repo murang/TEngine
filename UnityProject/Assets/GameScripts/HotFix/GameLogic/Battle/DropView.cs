@@ -1,15 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using TEngine;
-using TMPro;
 using UnityEngine;
+using UnityEngine.U2D;
+using YooAsset;
 
 namespace GameLogic
 {
     public class DropView : MonoBehaviour
     {
-        public TMP_Text txtNum;
-
+        public SpriteRenderer show;
+        public Sprite spBlockP;
+        public Sprite spBlock;
+        public Sprite[] spNumbers;
+        
         private DropData _data;
 
         // Update is called once per frame
@@ -21,14 +24,14 @@ namespace GameLogic
             }
             if (_data.block == 2)
             {
-                txtNum.text = "!";
+                show.sprite = spBlockP;
             }else if (_data.block == 1)
             {
-                txtNum.text = "?";
+                show.sprite = spBlock;
             }
-            else
+            else if(_data.num >=1 && _data.num<=7)
             {
-                txtNum.text = _data.num.ToString();
+                show.sprite = spNumbers[_data.num-1];
             }
         }
 
