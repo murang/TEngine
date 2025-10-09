@@ -5,6 +5,7 @@ go 1.25.1
 require (
 	github.com/murang/potato v0.0.6
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10
+	github.com/spf13/viper v1.21.0
 	google.golang.org/protobuf v1.36.9
 )
 
@@ -17,13 +18,13 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/fatih/color v1.18.0 // indirect
+	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
+	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
-	github.com/grafana/regexp v0.0.0-20250905093917-f7b3be9d1853 // indirect
 	github.com/hashicorp/consul/api v1.32.3 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
@@ -40,20 +41,26 @@ require (
 	github.com/lmittmann/tint v1.1.2 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/orcaman/concurrent-map v1.0.0 // indirect
+	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.23.2 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
 	github.com/prometheus/common v0.66.1 // indirect
 	github.com/prometheus/otlptranslator v1.0.0 // indirect
 	github.com/prometheus/procfs v0.17.0 // indirect
+	github.com/sagikazarmark/locafero v0.11.0 // indirect
 	github.com/samber/lo v1.51.0 // indirect
 	github.com/samber/slog-common v0.19.0 // indirect
 	github.com/samber/slog-zap/v2 v2.6.2 // indirect
+	github.com/sourcegraph/conc v0.3.1-0.20240121214520-5f936abd7ae8 // indirect
+	github.com/spf13/afero v1.15.0 // indirect
+	github.com/spf13/cast v1.10.0 // indirect
+	github.com/spf13/pflag v1.0.10 // indirect
+	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/templexxx/cpufeat v0.0.0-20180724012125-cef66df7f161 // indirect
 	github.com/templexxx/xor v0.0.0-20191217153810-f85b25db303b // indirect
 	github.com/tjfoc/gmsm v1.4.1 // indirect
@@ -69,6 +76,7 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	go.yaml.in/yaml/v2 v2.4.3 // indirect
+	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/crypto v0.42.0 // indirect
 	golang.org/x/exp v0.0.0-20250911091902-df9299821621 // indirect
 	golang.org/x/net v0.44.0 // indirect

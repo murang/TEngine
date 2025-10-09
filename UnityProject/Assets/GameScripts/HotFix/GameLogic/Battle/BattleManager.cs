@@ -12,6 +12,8 @@ namespace GameLogic
 {
     public class BattleManager : MonoBehaviour
     {
+        public int level;
+        
         public GameObject prefabDropView;
         public GridView gridView;
         
@@ -49,10 +51,14 @@ namespace GameLogic
             _logic = null;
         }
 
-        public void InitBattleLogic()
+        public void InitBattleLogic(int level)
         {
             _drops = new Drop[BattleConst.GridSize,BattleConst.GridSize];
-            _logic.Init(BattleConst.GridSize);
+            _logic.Init(new BattleLogicConfig()
+            {
+                size = BattleConst.GridSize,
+                seed = level,
+            });
             gridView?.Build(_logic);
         }
         

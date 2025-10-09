@@ -24,12 +24,12 @@ namespace Pb {
     static DefReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CglkZWYucHJvdG8SAnBiIhYKCFVzZXJJbmZvEgoKAmlkGAEgASgEQgVaAy9w",
-            "YmIGcHJvdG8z"));
+            "CglkZWYucHJvdG8SAnBiIigKCFVzZXJJbmZvEgoKAmlkGAEgASgNEhAKCG5p",
+            "Y2tuYW1lGAIgASgJQgVaAy9wYmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.UserInfo), global::Pb.UserInfo.Parser, new[]{ "Id" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Pb.UserInfo), global::Pb.UserInfo.Parser, new[]{ "Id", "Nickname" }, null, null, null, null)
           }));
     }
     #endregion
@@ -72,6 +72,7 @@ namespace Pb {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public UserInfo(UserInfo other) : this() {
       id_ = other.id_;
+      nickname_ = other.nickname_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -83,16 +84,31 @@ namespace Pb {
 
     /// <summary>Field number for the "id" field.</summary>
     public const int IdFieldNumber = 1;
-    private ulong id_;
+    private uint id_;
     /// <summary>
     /// 用户id
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong Id {
+    public uint Id {
       get { return id_; }
       set {
         id_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "nickname" field.</summary>
+    public const int NicknameFieldNumber = 2;
+    private string nickname_ = "";
+    /// <summary>
+    /// 用户昵称
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Nickname {
+      get { return nickname_; }
+      set {
+        nickname_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -112,6 +128,7 @@ namespace Pb {
         return true;
       }
       if (Id != other.Id) return false;
+      if (Nickname != other.Nickname) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -119,7 +136,8 @@ namespace Pb {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Id != 0UL) hash ^= Id.GetHashCode();
+      if (Id != 0) hash ^= Id.GetHashCode();
+      if (Nickname.Length != 0) hash ^= Nickname.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -138,9 +156,13 @@ namespace Pb {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Id != 0UL) {
+      if (Id != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt64(Id);
+        output.WriteUInt32(Id);
+      }
+      if (Nickname.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Nickname);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -152,9 +174,13 @@ namespace Pb {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Id != 0UL) {
+      if (Id != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt64(Id);
+        output.WriteUInt32(Id);
+      }
+      if (Nickname.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Nickname);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -166,8 +192,11 @@ namespace Pb {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Id != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Id);
+      if (Id != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
+      }
+      if (Nickname.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Nickname);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -181,8 +210,11 @@ namespace Pb {
       if (other == null) {
         return;
       }
-      if (other.Id != 0UL) {
+      if (other.Id != 0) {
         Id = other.Id;
+      }
+      if (other.Nickname.Length != 0) {
+        Nickname = other.Nickname;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -204,7 +236,11 @@ namespace Pb {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Id = input.ReadUInt64();
+            Id = input.ReadUInt32();
+            break;
+          }
+          case 18: {
+            Nickname = input.ReadString();
             break;
           }
         }
@@ -227,7 +263,11 @@ namespace Pb {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Id = input.ReadUInt64();
+            Id = input.ReadUInt32();
+            break;
+          }
+          case 18: {
+            Nickname = input.ReadString();
             break;
           }
         }

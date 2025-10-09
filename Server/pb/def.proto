@@ -3,5 +3,6 @@ package pb;
 option go_package = "/pb";
 
 message UserInfo {
-  uint64 id = 1;  // 用户id
+  uint32 id = 1;  // 用户id
+  string nickname = 2; // 用户昵称
 }

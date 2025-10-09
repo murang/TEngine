@@ -18,7 +18,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-func (m *C2S_Hello) MarshalVT() (dAtA []byte, err error) {
+func (m *C2S_Heartbeat) MarshalVT() (dAtA []byte, err error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -31,12 +31,12 @@ func (m *C2S_Hello) MarshalVT() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *C2S_Hello) MarshalToVT(dAtA []byte) (int, error) {
+func (m *C2S_Heartbeat) MarshalToVT(dAtA []byte) (int, error) {
 	size := m.SizeVT()
 	return m.MarshalToSizedBufferVT(dAtA[:size])
 }
 
-func (m *C2S_Hello) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+func (m *C2S_Heartbeat) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 	if m == nil {
 		return 0, nil
 	}
@@ -48,102 +48,160 @@ func (m *C2S_Hello) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
 		i -= len(m.unknownFields)
 		copy(dAtA[i:], m.unknownFields)
 	}
-	if m.User != nil {
-		size, err := m.User.MarshalToSizedBufferVT(dAtA[:i])
+	return len(dAtA) - i, nil
+}
+
+func (m *S2C_Heartbeat) MarshalVT() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *S2C_Heartbeat) MarshalToVT(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVT(dAtA[:size])
+}
+
+func (m *S2C_Heartbeat) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *C2S_Login) MarshalVT() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *C2S_Login) MarshalToVT(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVT(dAtA[:size])
+}
+
+func (m *C2S_Login) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if len(m.Code) > 0 {
+		i -= len(m.Code)
+		copy(dAtA[i:], m.Code)
+		i = protohelpers.EncodeVarint(dAtA, i, uint64(len(m.Code)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.LoginType != 0 {
+		i = protohelpers.EncodeVarint(dAtA, i, uint64(m.LoginType))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *S2C_Login) MarshalVT() (dAtA []byte, err error) {
+	if m == nil {
+		return nil, nil
+	}
+	size := m.SizeVT()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *S2C_Login) MarshalToVT(dAtA []byte) (int, error) {
+	size := m.SizeVT()
+	return m.MarshalToSizedBufferVT(dAtA[:size])
+}
+
+func (m *S2C_Login) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
+	if m == nil {
+		return 0, nil
+	}
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.unknownFields != nil {
+		i -= len(m.unknownFields)
+		copy(dAtA[i:], m.unknownFields)
+	}
+	if m.UserInfo != nil {
+		size, err := m.UserInfo.MarshalToSizedBufferVT(dAtA[:i])
 		if err != nil {
 			return 0, err
 		}
 		i -= size
 		i = protohelpers.EncodeVarint(dAtA, i, uint64(size))
 		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Name) > 0 {
-		i -= len(m.Name)
-		copy(dAtA[i:], m.Name)
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(len(m.Name)))
-		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *S2C_Hello) MarshalVT() (dAtA []byte, err error) {
-	if m == nil {
-		return nil, nil
-	}
-	size := m.SizeVT()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBufferVT(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *S2C_Hello) MarshalToVT(dAtA []byte) (int, error) {
-	size := m.SizeVT()
-	return m.MarshalToSizedBufferVT(dAtA[:size])
-}
-
-func (m *S2C_Hello) MarshalToSizedBufferVT(dAtA []byte) (int, error) {
-	if m == nil {
-		return 0, nil
-	}
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.unknownFields != nil {
-		i -= len(m.unknownFields)
-		copy(dAtA[i:], m.unknownFields)
-	}
-	if len(m.SayHi) > 0 {
-		i -= len(m.SayHi)
-		copy(dAtA[i:], m.SayHi)
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(len(m.SayHi)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Who) > 0 {
-		i -= len(m.Who)
-		copy(dAtA[i:], m.Who)
-		i = protohelpers.EncodeVarint(dAtA, i, uint64(len(m.Who)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *C2S_Hello) SizeVT() (n int) {
+func (m *C2S_Heartbeat) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Name)
-	if l > 0 {
-		n += 1 + l + protohelpers.SizeOfVarint(uint64(l))
-	}
-	if m.User != nil {
-		l = m.User.SizeVT()
-		n += 1 + l + protohelpers.SizeOfVarint(uint64(l))
-	}
 	n += len(m.unknownFields)
 	return n
 }
 
-func (m *S2C_Hello) SizeVT() (n int) {
+func (m *S2C_Heartbeat) SizeVT() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Who)
-	if l > 0 {
-		n += 1 + l + protohelpers.SizeOfVarint(uint64(l))
+	n += len(m.unknownFields)
+	return n
+}
+
+func (m *C2S_Login) SizeVT() (n int) {
+	if m == nil {
+		return 0
 	}
-	l = len(m.SayHi)
+	var l int
+	_ = l
+	if m.LoginType != 0 {
+		n += 1 + protohelpers.SizeOfVarint(uint64(m.LoginType))
+	}
+	l = len(m.Code)
 	if l > 0 {
 		n += 1 + l + protohelpers.SizeOfVarint(uint64(l))
 	}
@@ -151,7 +209,21 @@ func (m *S2C_Hello) SizeVT() (n int) {
 	return n
 }
 
-func (m *C2S_Hello) UnmarshalVT(dAtA []byte) error {
+func (m *S2C_Login) SizeVT() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.UserInfo != nil {
+		l = m.UserInfo.SizeVT()
+		n += 1 + l + protohelpers.SizeOfVarint(uint64(l))
+	}
+	n += len(m.unknownFields)
+	return n
+}
+
+func (m *C2S_Heartbeat) UnmarshalVT(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -174,15 +246,136 @@ func (m *C2S_Hello) UnmarshalVT(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: C2S_Hello: wiretype end group for non-group")
+			return fmt.Errorf("proto: C2S_Heartbeat: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: C2S_Hello: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: C2S_Heartbeat: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := protohelpers.Skip(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return protohelpers.ErrInvalidLength
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *S2C_Heartbeat) UnmarshalVT(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return protohelpers.ErrIntOverflow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: S2C_Heartbeat: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: S2C_Heartbeat: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := protohelpers.Skip(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return protohelpers.ErrInvalidLength
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *C2S_Login) UnmarshalVT(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return protohelpers.ErrIntOverflow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: C2S_Login: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: C2S_Login: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LoginType", wireType)
+			}
+			m.LoginType = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protohelpers.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LoginType |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -210,11 +403,62 @@ func (m *C2S_Hello) UnmarshalVT(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			m.Code = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 2:
+		default:
+			iNdEx = preIndex
+			skippy, err := protohelpers.Skip(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return protohelpers.ErrInvalidLength
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *S2C_Login) UnmarshalVT(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return protohelpers.ErrIntOverflow
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: S2C_Login: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: S2C_Login: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field User", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field UserInfo", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -241,127 +485,12 @@ func (m *C2S_Hello) UnmarshalVT(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.User == nil {
-				m.User = &UserInfo{}
+			if m.UserInfo == nil {
+				m.UserInfo = &UserInfo{}
 			}
-			if err := m.User.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.UserInfo.UnmarshalVT(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := protohelpers.Skip(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return protohelpers.ErrInvalidLength
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.unknownFields = append(m.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *S2C_Hello) UnmarshalVT(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return protohelpers.ErrIntOverflow
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: S2C_Hello: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: S2C_Hello: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Who", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protohelpers.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protohelpers.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Who = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SayHi", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return protohelpers.ErrIntOverflow
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return protohelpers.ErrInvalidLength
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return protohelpers.ErrInvalidLength
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.SayHi = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

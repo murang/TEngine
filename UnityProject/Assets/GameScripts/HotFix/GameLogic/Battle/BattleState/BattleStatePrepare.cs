@@ -10,7 +10,7 @@ namespace GameLogic
         protected override void OnEnter(IFsm<BattleManager> fsm)
         {
             BattleManager manager = fsm.Owner;
-            manager.InitBattleLogic();
+            manager.InitBattleLogic(manager.level);
             ChangeState<BattleStateStart>(fsm);
         }
     }

@@ -33,10 +33,16 @@ namespace GameLogic
         public int y;
         public DropActionType type;
     }
+
+    public struct BattleLogicConfig
+    {
+        public int size;
+        public int seed;
+    }
     
     public interface IBattleLogic
     {
-        void Init(int size);
+        void Init(BattleLogicConfig cfg);
         void OnDestroy();
         int GetSize();
         void Start();

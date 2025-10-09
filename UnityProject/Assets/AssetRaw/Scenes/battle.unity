@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0e930d4130141798b2b1b05df42120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 0
   prefabDropView: {fileID: 2773017142518532466, guid: 489edca8f1cca4e8e88db8479cc174c0, type: 3}
   gridView: {fileID: 1368483874}
 --- !u!4 &255965895

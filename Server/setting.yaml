@@ -1,0 +1,39 @@
+# 项目名
+project_name: d7
+
+# 对外端口
+port: 10086
+
+# db
+db:
+  host: 127.0.0.1
+  port: 3306
+  user: root
+  password: root
+  db_name: d7
+
+# log
+log:
+  is_file: false
+  path: logs
+  file_name: game
+  level: debug
+  max_size: 128
+  max_backups: 5
+  max_age: 30
+  compress: true
+  focus_error: true
+
+# 微信
+wechat:
+  active: false
+  app_id: wxe65aaa2eeb4347f6
+  app_secret: 33728da6f03fdccdb529cb7c54006772
+  prefix: local # 排行榜前缀 用于区分不同环境
+
+# 抖音
+tiktok:
+  active: false
+  app_id: wxe65aaa2eeb4347f6
+  app_secret: 33728da6f03fdccdb529cb7c54006772
+  prefix: local # 排行榜前缀 用于区分不同环境

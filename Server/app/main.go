@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	_ "server/pb/pb"
+	"server/setting"
 
 	"github.com/murang/potato"
 	"github.com/murang/potato/log"
@@ -17,7 +19,7 @@ func main() {
 		MsgHandler:     &Handler{},     // 需要用户自己实现IMsgHandler 用于处理消息
 	})
 	// 网络监听器 支持tcp/kcp/ws
-	ln, _ := net.NewListener("ws", ":10086")
+	ln, _ := net.NewListener("ws", fmt.Sprintf(":%d", setting.Main.Port))
 	// 添加网络监听器 可支持同时接收多个监听器消息 统一由MsgHandler处理
 	potato.GetNetManager().AddListener(ln)
 
@@ -25,7 +27,7 @@ func main() {
 		log.Logger.Info("all module started, server start")
 		return true
 	})
-	potato.Run()        // 开始update 所有组件开始tick 主线程阻塞
+	potato.Run() // 开始update 所有组件开始tick 主线程阻塞
 	potato.End(func() { // 主线程开始退出 所有组件销毁后执行入参函数
 		log.Logger.Info("all module stopped, server stop")
 	})

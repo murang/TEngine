@@ -23,7 +23,8 @@ const (
 
 type UserInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"` // 用户id
+	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`            // 用户id
+	Nickname      string                 `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"` // 用户昵称
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -58,20 +59,28 @@ func (*UserInfo) Descriptor() ([]byte, []int) {
 	return file_def_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *UserInfo) GetId() uint64 {
+func (x *UserInfo) GetId() uint32 {
 	if x != nil {
 		return x.Id
 	}
 	return 0
 }
 
+func (x *UserInfo) GetNickname() string {
+	if x != nil {
+		return x.Nickname
+	}
+	return ""
+}
+
 var File_def_proto protoreflect.FileDescriptor
 
 const file_def_proto_rawDesc = "" +
 	"\n" +
-	"\tdef.proto\x12\x02pb\"\x1a\n" +
+	"\tdef.proto\x12\x02pb\"6\n" +
 	"\bUserInfo\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x04R\x02idB\x05Z\x03/pbb\x06proto3"
+	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1a\n" +
+	"\bnickname\x18\x02 \x01(\tR\bnicknameB\x05Z\x03/pbb\x06proto3"
 
 var (
 	file_def_proto_rawDescOnce sync.Once

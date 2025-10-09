@@ -13,11 +13,16 @@ namespace GameLogic
         private int _size;
         private DropData[,] _dropMatrix;
         private IFsm<IBattleLogic> _fsm;
+        private BattleLogicConfig _cfg;
+        private System.Random _random;
         
         const float blockRate = .3f;
 
-        public void Init(int size)
+        public void Init(BattleLogicConfig cfg)
         {
+            _cfg = cfg;
+            _random = new System.Random(cfg.seed);
+            
             if (_fsm is not null)
             {
                 GameModule.Fsm.DestroyFsm(_fsm);
@@ -30,8 +35,8 @@ namespace GameLogic
                 new LogicStateMatch(),
             });
 
-            _size = size;
-            _dropMatrix = new DropData[size, size];
+            _size = cfg.size;
+            _dropMatrix = new DropData[_size, _size];
         }
 
         public void OnDestroy()
@@ -52,8 +57,8 @@ namespace GameLogic
         public DropData NewDrop()
         {
             _newDrop = MemoryPool.Acquire<DropData>();
-            _newDrop.num = Random.Range(1, _size + 1);
-            if (Random.value < blockRate)
+            _newDrop.num = _random.Next(1, _size + 1);
+            if (_random.NextDouble() < blockRate)
             {
                 _newDrop.block = 2;
             }
