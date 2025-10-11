@@ -26,7 +26,36 @@ namespace GameLogic
             // GameModule.Scene.LoadScene("battle");
             // UIModule.Instance.ShowUIAsync<BattleUI>();
             
-            BeatManager.Instance.LoadClip("rythem", 117.45383d,2.53097d);
+            // BeatManager.Instance.LoadClip("rythem", 117.45383d,2.53097d);
+
+            var ws = new WsConn(new ConnOption
+            {
+                Domain = "ws://127.0.0.1:10086",
+                Codec = new CodecPb(),
+            });
+
+            ws.OnConnected += conn =>
+            {
+                Log.Debug("OnConnected");
+                conn.Send(new C2S_Login
+                {
+                    LoginType = 666,
+                    Code = "nice"
+                });
+            };
+            ws.OnDisconnected += conn =>
+            {
+                Log.Debug("OnDisconnected");
+            };
+            ws.OnException += (conn, e) =>
+            {
+                Log.Debug("OnException" , e.Message);
+            };
+            ws.OnMessage += (conn, o) =>
+            {
+                Log.Debug("OnMessage" , o);
+            };
+            ws.Connect();
         }
         
         #endregion

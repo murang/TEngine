@@ -1,17 +1,17 @@
-package msg
+package work
 
 import (
-	"server/app/work"
 	"sync"
 
 	"github.com/murang/potato/net"
+	"google.golang.org/protobuf/proto"
 )
 
 var sessId2Agent = sync.Map{}
 
 type Agent struct {
 	session *net.Session
-	user    *work.User
+	user    *User
 }
 
 func AddAgent(session *net.Session) {
@@ -28,4 +28,8 @@ func RemoveAgent(session *net.Session) {
 func GetAgentBySessionId(sessionId uint64) *Agent {
 	value, _ := sessId2Agent.Load(sessionId)
 	return value.(*Agent)
+}
+
+func (a *Agent) SendMsg(msg proto.Message) {
+	a.session.Send(msg)
 }
