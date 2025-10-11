@@ -3,7 +3,7 @@ module server
 go 1.25.2
 
 require (
-	github.com/murang/potato v0.0.8
+	github.com/murang/potato v0.0.9
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10
 	github.com/spf13/viper v1.21.0
 	google.golang.org/protobuf v1.36.10
