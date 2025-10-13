@@ -2,6 +2,17 @@ syntax = "proto3";
 package pb;
 option go_package = "/pb";
 
+enum ErrCode {
+  Ok = 0;
+  InternalServerError = 1;
+  ArgumentInvalid = 2;
+  LoginFailed = 3;
+}
+
+message UserData {
+  UserInfo userInfo = 1;
+}
+
 message UserInfo {
   uint32 id = 1;  // 用户id
   string nickname = 2; // 用户昵称

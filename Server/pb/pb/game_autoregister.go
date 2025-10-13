@@ -10,10 +10,12 @@ import (
 func init() {
 	pb.RegisterMsg(uint32(MsgId_c2s_Heartbeat), reflect.TypeOf(&C2S_Heartbeat{}))
 	pb.RegisterMsg(uint32(MsgId_s2c_Heartbeat), reflect.TypeOf(&S2C_Heartbeat{}))
+	pb.RegisterMsg(uint32(MsgId_s2c_Error), reflect.TypeOf(&S2C_Error{}))
 	pb.RegisterMsg(uint32(MsgId_c2s_Login), reflect.TypeOf(&C2S_Login{}))
 	pb.RegisterMsg(uint32(MsgId_s2c_Login), reflect.TypeOf(&S2C_Login{}))
 	vt.Register(&C2S_Heartbeat{})
 	vt.Register(&S2C_Heartbeat{})
+	vt.Register(&S2C_Error{})
 	vt.Register(&C2S_Login{})
 	vt.Register(&S2C_Login{})
 }

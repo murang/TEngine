@@ -27,6 +27,7 @@ const (
 	MsgId_Unknown       MsgId = 0
 	MsgId_c2s_Heartbeat MsgId = 1
 	MsgId_s2c_Heartbeat MsgId = 2
+	MsgId_s2c_Error     MsgId = 3
 	MsgId_c2s_Login     MsgId = 100
 	MsgId_s2c_Login     MsgId = 101
 )
@@ -37,6 +38,7 @@ var (
 		0:   "Unknown",
 		1:   "c2s_Heartbeat",
 		2:   "s2c_Heartbeat",
+		3:   "s2c_Error",
 		100: "c2s_Login",
 		101: "s2c_Login",
 	}
@@ -44,6 +46,7 @@ var (
 		"Unknown":       0,
 		"c2s_Heartbeat": 1,
 		"s2c_Heartbeat": 2,
+		"s2c_Error":     3,
 		"c2s_Login":     100,
 		"s2c_Login":     101,
 	}
@@ -148,6 +151,50 @@ func (*S2C_Heartbeat) Descriptor() ([]byte, []int) {
 	return file_game_proto_rawDescGZIP(), []int{1}
 }
 
+type S2C_Error struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          ErrCode                `protobuf:"varint,1,opt,name=Code,proto3,enum=pb.ErrCode" json:"Code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *S2C_Error) Reset() {
+	*x = S2C_Error{}
+	mi := &file_game_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *S2C_Error) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*S2C_Error) ProtoMessage() {}
+
+func (x *S2C_Error) ProtoReflect() protoreflect.Message {
+	mi := &file_game_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use S2C_Error.ProtoReflect.Descriptor instead.
+func (*S2C_Error) Descriptor() ([]byte, []int) {
+	return file_game_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *S2C_Error) GetCode() ErrCode {
+	if x != nil {
+		return x.Code
+	}
+	return ErrCode_Ok
+}
+
 type C2S_Login struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	LoginType     int32                  `protobuf:"varint,1,opt,name=loginType,proto3" json:"loginType,omitempty"` // 0-游客 1-微信 2-抖音
@@ -158,7 +205,7 @@ type C2S_Login struct {
 
 func (x *C2S_Login) Reset() {
 	*x = C2S_Login{}
-	mi := &file_game_proto_msgTypes[2]
+	mi := &file_game_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -170,7 +217,7 @@ func (x *C2S_Login) String() string {
 func (*C2S_Login) ProtoMessage() {}
 
 func (x *C2S_Login) ProtoReflect() protoreflect.Message {
-	mi := &file_game_proto_msgTypes[2]
+	mi := &file_game_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -183,7 +230,7 @@ func (x *C2S_Login) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use C2S_Login.ProtoReflect.Descriptor instead.
 func (*C2S_Login) Descriptor() ([]byte, []int) {
-	return file_game_proto_rawDescGZIP(), []int{2}
+	return file_game_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *C2S_Login) GetLoginType() int32 {
@@ -202,14 +249,14 @@ func (x *C2S_Login) GetCode() string {
 
 type S2C_Login struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserInfo      *UserInfo              `protobuf:"bytes,1,opt,name=userInfo,proto3" json:"userInfo,omitempty"`
+	Data          *UserData              `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *S2C_Login) Reset() {
 	*x = S2C_Login{}
-	mi := &file_game_proto_msgTypes[3]
+	mi := &file_game_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -221,7 +268,7 @@ func (x *S2C_Login) String() string {
 func (*S2C_Login) ProtoMessage() {}
 
 func (x *S2C_Login) ProtoReflect() protoreflect.Message {
-	mi := &file_game_proto_msgTypes[3]
+	mi := &file_game_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -234,12 +281,12 @@ func (x *S2C_Login) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use S2C_Login.ProtoReflect.Descriptor instead.
 func (*S2C_Login) Descriptor() ([]byte, []int) {
-	return file_game_proto_rawDescGZIP(), []int{3}
+	return file_game_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *S2C_Login) GetUserInfo() *UserInfo {
+func (x *S2C_Login) GetData() *UserData {
 	if x != nil {
-		return x.UserInfo
+		return x.Data
 	}
 	return nil
 }
@@ -251,16 +298,19 @@ const file_game_proto_rawDesc = "" +
 	"\n" +
 	"game.proto\x12\x02pb\x1a\tdef.proto\"\x0f\n" +
 	"\rC2S_Heartbeat\"\x0f\n" +
-	"\rS2C_Heartbeat\"=\n" +
+	"\rS2C_Heartbeat\",\n" +
+	"\tS2C_Error\x12\x1f\n" +
+	"\x04Code\x18\x01 \x01(\x0e2\v.pb.ErrCodeR\x04Code\"=\n" +
 	"\tC2S_Login\x12\x1c\n" +
 	"\tloginType\x18\x01 \x01(\x05R\tloginType\x12\x12\n" +
-	"\x04code\x18\x02 \x01(\tR\x04code\"5\n" +
-	"\tS2C_Login\x12(\n" +
-	"\buserInfo\x18\x01 \x01(\v2\f.pb.UserInfoR\buserInfo*X\n" +
+	"\x04code\x18\x02 \x01(\tR\x04code\"-\n" +
+	"\tS2C_Login\x12 \n" +
+	"\x04data\x18\x01 \x01(\v2\f.pb.UserDataR\x04data*g\n" +
 	"\x05MsgId\x12\v\n" +
 	"\aUnknown\x10\x00\x12\x11\n" +
 	"\rc2s_Heartbeat\x10\x01\x12\x11\n" +
 	"\rs2c_Heartbeat\x10\x02\x12\r\n" +
+	"\ts2c_Error\x10\x03\x12\r\n" +
 	"\tc2s_Login\x10d\x12\r\n" +
 	"\ts2c_Login\x10eB\x05Z\x03/pbb\x06proto3"
 
@@ -277,22 +327,25 @@ func file_game_proto_rawDescGZIP() []byte {
 }
 
 var file_game_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_game_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_game_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_game_proto_goTypes = []any{
 	(MsgId)(0),            // 0: pb.MsgId
 	(*C2S_Heartbeat)(nil), // 1: pb.C2S_Heartbeat
 	(*S2C_Heartbeat)(nil), // 2: pb.S2C_Heartbeat
-	(*C2S_Login)(nil),     // 3: pb.C2S_Login
-	(*S2C_Login)(nil),     // 4: pb.S2C_Login
-	(*UserInfo)(nil),      // 5: pb.UserInfo
+	(*S2C_Error)(nil),     // 3: pb.S2C_Error
+	(*C2S_Login)(nil),     // 4: pb.C2S_Login
+	(*S2C_Login)(nil),     // 5: pb.S2C_Login
+	(ErrCode)(0),          // 6: pb.ErrCode
+	(*UserData)(nil),      // 7: pb.UserData
 }
 var file_game_proto_depIdxs = []int32{
-	5, // 0: pb.S2C_Login.userInfo:type_name -> pb.UserInfo
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	6, // 0: pb.S2C_Error.Code:type_name -> pb.ErrCode
+	7, // 1: pb.S2C_Login.data:type_name -> pb.UserData
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_game_proto_init() }
@@ -307,7 +360,7 @@ func file_game_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_game_proto_rawDesc), len(file_game_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   4,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

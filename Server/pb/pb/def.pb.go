@@ -21,6 +21,102 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type ErrCode int32
+
+const (
+	ErrCode_Ok                  ErrCode = 0
+	ErrCode_InternalServerError ErrCode = 1
+	ErrCode_ArgumentInvalid     ErrCode = 2
+	ErrCode_LoginFailed         ErrCode = 3
+)
+
+// Enum value maps for ErrCode.
+var (
+	ErrCode_name = map[int32]string{
+		0: "Ok",
+		1: "InternalServerError",
+		2: "ArgumentInvalid",
+		3: "LoginFailed",
+	}
+	ErrCode_value = map[string]int32{
+		"Ok":                  0,
+		"InternalServerError": 1,
+		"ArgumentInvalid":     2,
+		"LoginFailed":         3,
+	}
+)
+
+func (x ErrCode) Enum() *ErrCode {
+	p := new(ErrCode)
+	*p = x
+	return p
+}
+
+func (x ErrCode) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ErrCode) Descriptor() protoreflect.EnumDescriptor {
+	return file_def_proto_enumTypes[0].Descriptor()
+}
+
+func (ErrCode) Type() protoreflect.EnumType {
+	return &file_def_proto_enumTypes[0]
+}
+
+func (x ErrCode) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ErrCode.Descriptor instead.
+func (ErrCode) EnumDescriptor() ([]byte, []int) {
+	return file_def_proto_rawDescGZIP(), []int{0}
+}
+
+type UserData struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserInfo      *UserInfo              `protobuf:"bytes,1,opt,name=userInfo,proto3" json:"userInfo,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UserData) Reset() {
+	*x = UserData{}
+	mi := &file_def_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UserData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserData) ProtoMessage() {}
+
+func (x *UserData) ProtoReflect() protoreflect.Message {
+	mi := &file_def_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserData.ProtoReflect.Descriptor instead.
+func (*UserData) Descriptor() ([]byte, []int) {
+	return file_def_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *UserData) GetUserInfo() *UserInfo {
+	if x != nil {
+		return x.UserInfo
+	}
+	return nil
+}
+
 type UserInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`            // 用户id
@@ -31,7 +127,7 @@ type UserInfo struct {
 
 func (x *UserInfo) Reset() {
 	*x = UserInfo{}
-	mi := &file_def_proto_msgTypes[0]
+	mi := &file_def_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +139,7 @@ func (x *UserInfo) String() string {
 func (*UserInfo) ProtoMessage() {}
 
 func (x *UserInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_def_proto_msgTypes[0]
+	mi := &file_def_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +152,7 @@ func (x *UserInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserInfo.ProtoReflect.Descriptor instead.
 func (*UserInfo) Descriptor() ([]byte, []int) {
-	return file_def_proto_rawDescGZIP(), []int{0}
+	return file_def_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *UserInfo) GetId() uint32 {
@@ -77,10 +173,17 @@ var File_def_proto protoreflect.FileDescriptor
 
 const file_def_proto_rawDesc = "" +
 	"\n" +
-	"\tdef.proto\x12\x02pb\"6\n" +
+	"\tdef.proto\x12\x02pb\"4\n" +
+	"\bUserData\x12(\n" +
+	"\buserInfo\x18\x01 \x01(\v2\f.pb.UserInfoR\buserInfo\"6\n" +
 	"\bUserInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1a\n" +
-	"\bnickname\x18\x02 \x01(\tR\bnicknameB\x05Z\x03/pbb\x06proto3"
+	"\bnickname\x18\x02 \x01(\tR\bnickname*P\n" +
+	"\aErrCode\x12\x06\n" +
+	"\x02Ok\x10\x00\x12\x17\n" +
+	"\x13InternalServerError\x10\x01\x12\x13\n" +
+	"\x0fArgumentInvalid\x10\x02\x12\x0f\n" +
+	"\vLoginFailed\x10\x03B\x05Z\x03/pbb\x06proto3"
 
 var (
 	file_def_proto_rawDescOnce sync.Once
@@ -94,16 +197,20 @@ func file_def_proto_rawDescGZIP() []byte {
 	return file_def_proto_rawDescData
 }
 
-var file_def_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_def_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_def_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_def_proto_goTypes = []any{
-	(*UserInfo)(nil), // 0: pb.UserInfo
+	(ErrCode)(0),     // 0: pb.ErrCode
+	(*UserData)(nil), // 1: pb.UserData
+	(*UserInfo)(nil), // 2: pb.UserInfo
 }
 var file_def_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2, // 0: pb.UserData.userInfo:type_name -> pb.UserInfo
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_def_proto_init() }
@@ -116,13 +223,14 @@ func file_def_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_def_proto_rawDesc), len(file_def_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   1,
+			NumEnums:      1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_def_proto_goTypes,
 		DependencyIndexes: file_def_proto_depIdxs,
+		EnumInfos:         file_def_proto_enumTypes,
 		MessageInfos:      file_def_proto_msgTypes,
 	}.Build()
 	File_def_proto = out.File

@@ -7,17 +7,23 @@ enum MsgId {
   Unknown = 0;
   c2s_Heartbeat = 1;
   s2c_Heartbeat = 2;
+  s2c_Error = 3;
   c2s_Login = 100;
   s2c_Login = 101;
 }
 
+
 message C2S_Heartbeat {}
 message S2C_Heartbeat {}
+
+message S2C_Error {
+  ErrCode Code = 1;
+}
 
 message C2S_Login {
   int32 loginType = 1; // 0-游客 1-微信 2-抖音
   string code = 2;
 }
 message S2C_Login {
-  UserInfo userInfo = 1;
+  UserData data = 1;
 }

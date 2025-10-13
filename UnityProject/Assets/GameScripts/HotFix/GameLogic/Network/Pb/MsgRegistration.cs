@@ -11,6 +11,7 @@ public class MsgReg
 	{
 		MsgMeta.RegisterMsgMeta((int)MsgId.C2SHeartbeat, typeof(C2S_Heartbeat));
 		MsgMeta.RegisterMsgMeta((int)MsgId.S2CHeartbeat, typeof(S2C_Heartbeat));
+		MsgMeta.RegisterMsgMeta((int)MsgId.S2CError, typeof(S2C_Error));
 		MsgMeta.RegisterMsgMeta((int)MsgId.C2SLogin, typeof(C2S_Login));
 		MsgMeta.RegisterMsgMeta((int)MsgId.S2CLogin, typeof(S2C_Login));
 	}
