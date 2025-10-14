@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"server/app/msg"
+	"server/db"
 	_ "server/pb/pb"
 	"server/setting"
 
@@ -20,6 +21,8 @@ func main() {
 	})
 	ln, _ := net.NewListener("ws", fmt.Sprintf(":%d", setting.Main.Port))
 	potato.GetNetManager().AddListener(ln)
+
+	db.Init()
 
 	potato.Start(nil)
 	potato.Run()
