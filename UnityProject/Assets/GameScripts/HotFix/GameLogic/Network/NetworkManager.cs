@@ -35,7 +35,7 @@ namespace GameLogic
             };
             conn.OnException += (conn, e) =>
             {
-                Log.Debug("OnException: {0}", e.Message);
+                Log.Warning("OnException: {0}", e.Message);
             };
             conn.OnMessage += (conn, o) =>
             {

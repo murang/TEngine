@@ -33,5 +33,15 @@ namespace GameLogic
         }
         
         #endregion
+
+        protected override void RegisterEvent()
+        {
+            AddUIEvent<S2C_Login>(IEventMsg_Event.S2C_Login, OnLogin);
+        }
+
+        void OnLogin(S2C_Login msg)
+        {
+            Player.Instance.data = msg.Data;
+        }
     }
 }
