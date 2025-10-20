@@ -9,7 +9,7 @@ namespace GameLogic
     {
         public void Login()
         {
-            conn.Send(new C2S_Login
+            _conn.Send(new C2S_Login
             {
                 Code = "nice"
             });

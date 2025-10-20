@@ -8,5 +8,10 @@ namespace GameLogic
     public class Player : Singleton<Player>
     {
         public UserData data;
+        
+        public void Init(UserData d)
+        {
+            data = d;
+        }
     }
 }

@@ -41,7 +41,9 @@ namespace GameLogic
 
         void OnLogin(S2C_Login msg)
         {
-            Player.Instance.data = msg.Data;
+            Player.Instance.Init(msg.Data);
+            UIModule.Instance.CloseAll();
+            UIModule.Instance.ShowUIAsync<MainMenuUI>();
         }
     }
 }

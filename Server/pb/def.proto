@@ -11,9 +11,24 @@ enum ErrCode {
 
 message UserData {
   UserInfo userInfo = 1;
+  AssetsInfo assetsInfo = 2;
+  LevelInfo levelInfo = 3;
 }
 
 message UserInfo {
   uint32 id = 1;  // 用户id
   string nickname = 2; // 用户昵称
+}
+
+message AssetsInfo {
+  uint32 coin = 1; // 金币
+  int64 hpFullTime = 2; // 血量满时间
+}
+
+message LevelInfo {
+  uint32 level = 1;
+}
+
+message LevelDetail {
+  uint32 level = 1;
 }

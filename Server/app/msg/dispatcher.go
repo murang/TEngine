@@ -24,6 +24,8 @@ func wrapHandler[T proto.Message](handler HandlerFunc[T]) func(agent *work.Agent
 
 // 消息分发
 var msgDispatcher = map[uintptr]func(agent *work.Agent, msg proto.Message){
-	util.TypePtrOf(&pb.C2S_Heartbeat{}): wrapHandler(work.Heartbeat),
-	util.TypePtrOf(&pb.C2S_Login{}):     wrapHandler(work.Login),
+	util.TypePtrOf(&pb.C2S_Heartbeat{}):    wrapHandler(work.Heartbeat),
+	util.TypePtrOf(&pb.C2S_Login{}):        wrapHandler(work.Login),
+	util.TypePtrOf(&pb.C2S_GetLevelInfo{}): wrapHandler(work.GetLevelInfo),
+	util.TypePtrOf(&pb.C2S_FinishLevel{}):  wrapHandler(work.FinishLevel),
 }

@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Google.Protobuf;
+using Pb;
 using TEngine;
 using UnityEngine;
 
@@ -9,44 +12,49 @@ namespace GameLogic
     public class NetworkSetting
     {
         public static string Url = "ws://127.0.0.1:10086";
+        public static int HeartbeatInterval = 5;
     }
     
     public partial class NetworkManager : Singleton<NetworkManager>
     {
-        public IConn conn;
+        private IConn _conn;
+        private bool _isConnect;
         
         public void Init()
         {
-            conn = new WsConn(new ConnOption
+            _conn = new WsConn(new ConnOption
             {
                 Domain = NetworkSetting.Url,
                 Codec = new CodecPb()
             });
 
-            conn.OnConnected += iConn =>
+            _conn.OnConnected += iConn =>
             {
                 Log.Info($"{NetworkSetting.Url} Connected");
+                _isConnect = true;
+                StartHeartbeat().Forget();
                 HandleMsg();
                 Login();
             };
-            conn.OnDisconnected += conn =>
+            _conn.OnDisconnected += conn =>
             {
-                Log.Debug("OnDisconnected");
+                Log.Info("OnDisconnected");
+                _isConnect = false;
             };
-            conn.OnException += (conn, e) =>
+            _conn.OnException += (conn, e) =>
             {
                 Log.Warning("OnException: {0}", e.Message);
             };
-            conn.OnMessage += (conn, o) =>
+            _conn.OnMessage += (conn, o) =>
             {
-                Log.Debug("OnMessage: {0}", ((IMessage)o).ToString());
+                Log.Info("OnMessage: {0}", ((IMessage)o).ToString());
                 MsgDispatcher.Instance.DispatchMsg(o);
             };
         }
         
         public void Connect()
         {
-            conn.Connect();
+            _conn.Connect();
         }
         
         public void Disconnect()
@@ -56,7 +64,16 @@ namespace GameLogic
         
         public void Send(object message)
         {
-            conn.Send(message);
+            _conn.Send(message);
+        }
+
+        public async UniTaskVoid StartHeartbeat()
+        {
+            while (_isConnect)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(NetworkSetting.HeartbeatInterval));
+                Send(new C2S_Heartbeat());
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ package db
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -16,13 +17,16 @@ const (
 )
 
 type User struct {
-	Marks      map[string]struct{} `json:"-" gorm:"-"` // 需要更新的字段
-	gorm.Model                     // userId就用基础model中的id
-	DeviceId   string              `json:"deviceId" gorm:"index"` // 设备id
-	WeChatId   string              `json:"weChatId" gorm:"index"` // 微信openId
-	TikTokId   string              `json:"tikTokId" gorm:"index"` // 抖音openId
-	Nickname   string              `json:"nickname"`              // 昵称
-	Icon       string              `json:"icon"`                  // 头像
+	Marks      map[string]struct{} `json:"-" gorm:"-"`                                                // 需要更新的字段
+	gorm.Model                                                                                        // userId就用基础model中的id
+	DeviceId   string              `json:"deviceId" gorm:"index"`                                     // 设备id
+	WeChatId   string              `json:"weChatId" gorm:"index"`                                     // 微信openId
+	TikTokId   string              `json:"tikTokId" gorm:"index"`                                     // 抖音openId
+	Nickname   string              `json:"nickname"`                                                  // 昵称
+	Icon       string              `json:"icon"`                                                      // 头像
+	Coin       uint                `json:"coin"`                                                      // 金币
+	Level      uint                `json:"level"`                                                     // 关卡
+	HpFullTime time.Time           `json:"hpFullTime" gorm:"type:datetime;default:CURRENT_TIMESTAMP"` // 血量满时间
 }
 
 func (u *User) Patch() {

@@ -15,6 +15,24 @@ public partial class Tables
 {
     #region The Tables
 
+    private TbMisc m_TbMisc;
+    public TbMisc TbMisc 
+    {
+        get
+        {
+            if (m_TbMisc == null)
+            {
+                m_TbMisc = new TbMisc(defaultLoader("tbmisc"));
+                m_TbMisc.ResolveRef(this);
+            }
+            return m_TbMisc;
+        }
+        set
+        {
+            m_TbMisc = value;
+            m_TbMisc.ResolveRef(this);
+        }
+    }
     private TbItem m_TbItem;
     public TbItem TbItem 
     {

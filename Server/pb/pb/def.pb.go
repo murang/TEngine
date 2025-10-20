@@ -76,6 +76,8 @@ func (ErrCode) EnumDescriptor() ([]byte, []int) {
 type UserData struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserInfo      *UserInfo              `protobuf:"bytes,1,opt,name=userInfo,proto3" json:"userInfo,omitempty"`
+	AssetsInfo    *AssetsInfo            `protobuf:"bytes,2,opt,name=assetsInfo,proto3" json:"assetsInfo,omitempty"`
+	LevelInfo     *LevelInfo             `protobuf:"bytes,3,opt,name=levelInfo,proto3" json:"levelInfo,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -113,6 +115,20 @@ func (*UserData) Descriptor() ([]byte, []int) {
 func (x *UserData) GetUserInfo() *UserInfo {
 	if x != nil {
 		return x.UserInfo
+	}
+	return nil
+}
+
+func (x *UserData) GetAssetsInfo() *AssetsInfo {
+	if x != nil {
+		return x.AssetsInfo
+	}
+	return nil
+}
+
+func (x *UserData) GetLevelInfo() *LevelInfo {
+	if x != nil {
+		return x.LevelInfo
 	}
 	return nil
 }
@@ -169,16 +185,170 @@ func (x *UserInfo) GetNickname() string {
 	return ""
 }
 
+type AssetsInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Coin          uint32                 `protobuf:"varint,1,opt,name=coin,proto3" json:"coin,omitempty"`             // 金币
+	HpFullTime    int64                  `protobuf:"varint,2,opt,name=hpFullTime,proto3" json:"hpFullTime,omitempty"` // 血量满时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AssetsInfo) Reset() {
+	*x = AssetsInfo{}
+	mi := &file_def_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AssetsInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssetsInfo) ProtoMessage() {}
+
+func (x *AssetsInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_def_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssetsInfo.ProtoReflect.Descriptor instead.
+func (*AssetsInfo) Descriptor() ([]byte, []int) {
+	return file_def_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *AssetsInfo) GetCoin() uint32 {
+	if x != nil {
+		return x.Coin
+	}
+	return 0
+}
+
+func (x *AssetsInfo) GetHpFullTime() int64 {
+	if x != nil {
+		return x.HpFullTime
+	}
+	return 0
+}
+
+type LevelInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Level         uint32                 `protobuf:"varint,1,opt,name=level,proto3" json:"level,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LevelInfo) Reset() {
+	*x = LevelInfo{}
+	mi := &file_def_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LevelInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LevelInfo) ProtoMessage() {}
+
+func (x *LevelInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_def_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LevelInfo.ProtoReflect.Descriptor instead.
+func (*LevelInfo) Descriptor() ([]byte, []int) {
+	return file_def_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *LevelInfo) GetLevel() uint32 {
+	if x != nil {
+		return x.Level
+	}
+	return 0
+}
+
+type LevelDetail struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Level         uint32                 `protobuf:"varint,1,opt,name=level,proto3" json:"level,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LevelDetail) Reset() {
+	*x = LevelDetail{}
+	mi := &file_def_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LevelDetail) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LevelDetail) ProtoMessage() {}
+
+func (x *LevelDetail) ProtoReflect() protoreflect.Message {
+	mi := &file_def_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LevelDetail.ProtoReflect.Descriptor instead.
+func (*LevelDetail) Descriptor() ([]byte, []int) {
+	return file_def_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *LevelDetail) GetLevel() uint32 {
+	if x != nil {
+		return x.Level
+	}
+	return 0
+}
+
 var File_def_proto protoreflect.FileDescriptor
 
 const file_def_proto_rawDesc = "" +
 	"\n" +
-	"\tdef.proto\x12\x02pb\"4\n" +
+	"\tdef.proto\x12\x02pb\"\x91\x01\n" +
 	"\bUserData\x12(\n" +
-	"\buserInfo\x18\x01 \x01(\v2\f.pb.UserInfoR\buserInfo\"6\n" +
+	"\buserInfo\x18\x01 \x01(\v2\f.pb.UserInfoR\buserInfo\x12.\n" +
+	"\n" +
+	"assetsInfo\x18\x02 \x01(\v2\x0e.pb.AssetsInfoR\n" +
+	"assetsInfo\x12+\n" +
+	"\tlevelInfo\x18\x03 \x01(\v2\r.pb.LevelInfoR\tlevelInfo\"6\n" +
 	"\bUserInfo\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1a\n" +
-	"\bnickname\x18\x02 \x01(\tR\bnickname*P\n" +
+	"\bnickname\x18\x02 \x01(\tR\bnickname\"@\n" +
+	"\n" +
+	"AssetsInfo\x12\x12\n" +
+	"\x04coin\x18\x01 \x01(\rR\x04coin\x12\x1e\n" +
+	"\n" +
+	"hpFullTime\x18\x02 \x01(\x03R\n" +
+	"hpFullTime\"!\n" +
+	"\tLevelInfo\x12\x14\n" +
+	"\x05level\x18\x01 \x01(\rR\x05level\"#\n" +
+	"\vLevelDetail\x12\x14\n" +
+	"\x05level\x18\x01 \x01(\rR\x05level*P\n" +
 	"\aErrCode\x12\x06\n" +
 	"\x02Ok\x10\x00\x12\x17\n" +
 	"\x13InternalServerError\x10\x01\x12\x13\n" +
@@ -198,19 +368,24 @@ func file_def_proto_rawDescGZIP() []byte {
 }
 
 var file_def_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_def_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_def_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_def_proto_goTypes = []any{
-	(ErrCode)(0),     // 0: pb.ErrCode
-	(*UserData)(nil), // 1: pb.UserData
-	(*UserInfo)(nil), // 2: pb.UserInfo
+	(ErrCode)(0),        // 0: pb.ErrCode
+	(*UserData)(nil),    // 1: pb.UserData
+	(*UserInfo)(nil),    // 2: pb.UserInfo
+	(*AssetsInfo)(nil),  // 3: pb.AssetsInfo
+	(*LevelInfo)(nil),   // 4: pb.LevelInfo
+	(*LevelDetail)(nil), // 5: pb.LevelDetail
 }
 var file_def_proto_depIdxs = []int32{
 	2, // 0: pb.UserData.userInfo:type_name -> pb.UserInfo
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	3, // 1: pb.UserData.assetsInfo:type_name -> pb.AssetsInfo
+	4, // 2: pb.UserData.levelInfo:type_name -> pb.LevelInfo
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_def_proto_init() }
@@ -224,7 +399,7 @@ func file_def_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_def_proto_rawDesc), len(file_def_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   2,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
