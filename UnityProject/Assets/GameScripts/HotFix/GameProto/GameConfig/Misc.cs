@@ -16,6 +16,7 @@ public sealed partial class Misc : Luban.BeanBase
 {
     public Misc(ByteBuf _buf) 
     {
+        HpMax = _buf.ReadInt();
         HpRestoreSecond = _buf.ReadInt();
         ScoreStart = _buf.ReadInt();
     }
@@ -25,6 +26,10 @@ public sealed partial class Misc : Luban.BeanBase
         return new Misc(_buf);
     }
 
+    /// <summary>
+    /// 最大体力
+    /// </summary>
+    public readonly int HpMax;
     /// <summary>
     /// 体力恢复时间
     /// </summary>
@@ -44,6 +49,7 @@ public sealed partial class Misc : Luban.BeanBase
     public override string ToString()
     {
         return "{ "
+        + "hpMax:" + HpMax + ","
         + "hpRestoreSecond:" + HpRestoreSecond + ","
         + "scoreStart:" + ScoreStart + ","
         + "}";

@@ -27,7 +27,7 @@ public partial class TbMisc
             Misc _v;
             _v = global::GameConfig.Misc.DeserializeMisc(_buf);
             _dataList.Add(_v);
-            _dataMap.Add(_v.HpRestoreSecond, _v);
+            _dataMap.Add(_v.HpMax, _v);
         }
     }
 

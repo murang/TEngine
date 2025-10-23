@@ -17,8 +17,8 @@ const (
 )
 
 type User struct {
-	Marks      map[string]struct{} `json:"-" gorm:"-"`                                                // 需要更新的字段
-	gorm.Model                                                                                        // userId就用基础model中的id
+	Marks      map[string]struct{} `json:"-" gorm:"-"` // 需要更新的字段
+	gorm.Model                     // userId就用基础model中的id
 	DeviceId   string              `json:"deviceId" gorm:"index"`                                     // 设备id
 	WeChatId   string              `json:"weChatId" gorm:"index"`                                     // 微信openId
 	TikTokId   string              `json:"tikTokId" gorm:"index"`                                     // 抖音openId
@@ -60,7 +60,7 @@ func GetAndPatchUserById(id uint) (*User, error) {
 
 func GetOrNewUserByDeviceId(deviceId string) (*User, error) {
 	var user User
-	if err := Client.Select("id").Where("device_id = ?", deviceId).First(&user).Error; err != nil {
+	if err := Client.Where("device_id = ?", deviceId).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			user.DeviceId = deviceId
 			if err = Client.Create(&user).Error; err != nil {
@@ -75,7 +75,7 @@ func GetOrNewUserByDeviceId(deviceId string) (*User, error) {
 
 func GetOrNewUserByWeChatId(openId string) (*User, error) {
 	var user User
-	if err := Client.Select("id").Where("we_chat_id = ?", openId).First(&user).Error; err != nil {
+	if err := Client.Where("we_chat_id = ?", openId).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			user.WeChatId = openId
 			if err = Client.Create(&user).Error; err != nil {

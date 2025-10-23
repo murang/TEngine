@@ -22,7 +22,7 @@ func Login(agent *Agent, msg *pb.C2S_Login) {
 	case 0: // 游客
 		model, err := db.GetOrNewUserByDeviceId(msg.Code)
 		if err != nil {
-			log.Sugar.Errorf("get or new user by device id err: %s", err.Error())
+			log.Sugar.Errorf("get or new User by device id err: %s", err.Error())
 			agent.SendMsg(&pb.S2C_Error{Code: pb.ErrCode_InternalServerError})
 			return
 		}
@@ -32,7 +32,7 @@ func Login(agent *Agent, msg *pb.C2S_Login) {
 		if wxSession != nil {
 			model, err := db.GetOrNewUserByWeChatId(wxSession.OpenId)
 			if err != nil {
-				log.Sugar.Errorf("get or new user by we chat id err: %s", err.Error())
+				log.Sugar.Errorf("get or new User by we chat id err: %s", err.Error())
 				agent.SendMsg(&pb.S2C_Error{Code: pb.ErrCode_InternalServerError})
 				return
 			}
@@ -43,8 +43,8 @@ func Login(agent *Agent, msg *pb.C2S_Login) {
 	}
 
 	if userModel != nil {
-		agent.user = GetUserByModel(userModel)
-		agent.SendMsg(&pb.S2C_Login{Data: agent.user.GetUserData()})
+		agent.User = GetUserByModel(userModel)
+		agent.SendMsg(&pb.S2C_Login{Data: agent.User.GetUserData()})
 	} else {
 		agent.SendMsg(&pb.S2C_Error{Code: pb.ErrCode_LoginFailed})
 	}

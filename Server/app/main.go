@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"server/app/msg"
 	"server/db"
-	_ "server/pb/pb"
 	"server/setting"
 
 	"github.com/murang/potato"
