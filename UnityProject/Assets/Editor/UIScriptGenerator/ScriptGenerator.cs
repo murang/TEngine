@@ -186,7 +186,7 @@ namespace TEngine.Editor.UI
 
             if (rule != null)
             {
-                componentName = rule.componentName;
+                componentName = rule.componentName.ToString();
             }
             
             bool isUIWidget = rule is { isUIWidget: true };
