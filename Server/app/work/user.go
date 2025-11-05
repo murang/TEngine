@@ -33,7 +33,7 @@ func (u *User) GetUserInfo() *pb.UserInfo {
 
 func (u *User) GetAssetsInfo() *pb.AssetsInfo {
 	return &pb.AssetsInfo{
-		Coin:       uint32(u.Model.Coin),
+		Coin:       u.Model.Coin,
 		HpFullTime: u.Model.HpFullTime.UnixMilli(),
 	}
 }

@@ -42,6 +42,7 @@ func (h *Handler) OnMsg(session *net.Session, msg any) {
 			log.Sugar.Infof("session: %d, =====>: %T %v", session.ID(), msg, msg)
 		}
 		handler(agent, msg.(proto.Message))
+		agent.Save()
 	} else {
 		log.Sugar.Errorf("user: %d, no handler for msg: %T %v", agent.User.Model.ID, msg, msg)
 	}

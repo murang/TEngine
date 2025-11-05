@@ -9,11 +9,14 @@ import (
 )
 
 const (
-	UserColDeviceId = "device_id"
-	UserColWeChatId = "we_chat_id"
-	UserColTikTokId = "tik_tok_id"
-	UserColNickname = "nickname"
-	UserColIcon     = "icon"
+	UserColDeviceId   = "device_id"
+	UserColWeChatId   = "we_chat_id"
+	UserColTikTokId   = "tik_tok_id"
+	UserColNickname   = "nickname"
+	UserColIcon       = "icon"
+	UserColCoin       = "coin"
+	UserColLevel      = "level"
+	UserColHpFullTime = "hp_full_time"
 )
 
 type User struct {
@@ -24,8 +27,8 @@ type User struct {
 	TikTokId   string              `json:"tikTokId" gorm:"index"`                                     // 抖音openId
 	Nickname   string              `json:"nickname"`                                                  // 昵称
 	Icon       string              `json:"icon"`                                                      // 头像
-	Coin       uint                `json:"coin"`                                                      // 金币
-	Level      uint                `json:"level"`                                                     // 关卡
+	Coin       int32               `json:"coin"`                                                      // 金币
+	Level      int32               `json:"level"`                                                     // 关卡
 	HpFullTime time.Time           `json:"hpFullTime" gorm:"type:datetime;default:CURRENT_TIMESTAMP"` // 血量满时间
 }
 

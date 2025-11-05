@@ -187,7 +187,7 @@ func (x *UserInfo) GetNickname() string {
 
 type AssetsInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Coin          uint32                 `protobuf:"varint,1,opt,name=coin,proto3" json:"coin,omitempty"`             // 金币
+	Coin          int32                  `protobuf:"varint,1,opt,name=coin,proto3" json:"coin,omitempty"`             // 金币
 	HpFullTime    int64                  `protobuf:"varint,2,opt,name=hpFullTime,proto3" json:"hpFullTime,omitempty"` // 血量满时间
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -223,7 +223,7 @@ func (*AssetsInfo) Descriptor() ([]byte, []int) {
 	return file_def_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *AssetsInfo) GetCoin() uint32 {
+func (x *AssetsInfo) GetCoin() int32 {
 	if x != nil {
 		return x.Coin
 	}
@@ -239,7 +239,7 @@ func (x *AssetsInfo) GetHpFullTime() int64 {
 
 type LevelInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Level         uint32                 `protobuf:"varint,1,opt,name=level,proto3" json:"level,omitempty"`
+	Level         int32                  `protobuf:"varint,1,opt,name=level,proto3" json:"level,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -274,7 +274,7 @@ func (*LevelInfo) Descriptor() ([]byte, []int) {
 	return file_def_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *LevelInfo) GetLevel() uint32 {
+func (x *LevelInfo) GetLevel() int32 {
 	if x != nil {
 		return x.Level
 	}
@@ -283,7 +283,8 @@ func (x *LevelInfo) GetLevel() uint32 {
 
 type LevelDetail struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Level         uint32                 `protobuf:"varint,1,opt,name=level,proto3" json:"level,omitempty"`
+	Level         int32                  `protobuf:"varint,1,opt,name=level,proto3" json:"level,omitempty"`
+	Ranks         []*Rank                `protobuf:"bytes,2,rep,name=ranks,proto3" json:"ranks,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -318,9 +319,68 @@ func (*LevelDetail) Descriptor() ([]byte, []int) {
 	return file_def_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *LevelDetail) GetLevel() uint32 {
+func (x *LevelDetail) GetLevel() int32 {
 	if x != nil {
 		return x.Level
+	}
+	return 0
+}
+
+func (x *LevelDetail) GetRanks() []*Rank {
+	if x != nil {
+		return x.Ranks
+	}
+	return nil
+}
+
+type Rank struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        uint32                 `protobuf:"varint,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	Score         int64                  `protobuf:"varint,2,opt,name=score,proto3" json:"score,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Rank) Reset() {
+	*x = Rank{}
+	mi := &file_def_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Rank) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Rank) ProtoMessage() {}
+
+func (x *Rank) ProtoReflect() protoreflect.Message {
+	mi := &file_def_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Rank.ProtoReflect.Descriptor instead.
+func (*Rank) Descriptor() ([]byte, []int) {
+	return file_def_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Rank) GetUserId() uint32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *Rank) GetScore() int64 {
+	if x != nil {
+		return x.Score
 	}
 	return 0
 }
@@ -341,14 +401,18 @@ const file_def_proto_rawDesc = "" +
 	"\bnickname\x18\x02 \x01(\tR\bnickname\"@\n" +
 	"\n" +
 	"AssetsInfo\x12\x12\n" +
-	"\x04coin\x18\x01 \x01(\rR\x04coin\x12\x1e\n" +
+	"\x04coin\x18\x01 \x01(\x05R\x04coin\x12\x1e\n" +
 	"\n" +
 	"hpFullTime\x18\x02 \x01(\x03R\n" +
 	"hpFullTime\"!\n" +
 	"\tLevelInfo\x12\x14\n" +
-	"\x05level\x18\x01 \x01(\rR\x05level\"#\n" +
+	"\x05level\x18\x01 \x01(\x05R\x05level\"C\n" +
 	"\vLevelDetail\x12\x14\n" +
-	"\x05level\x18\x01 \x01(\rR\x05level*P\n" +
+	"\x05level\x18\x01 \x01(\x05R\x05level\x12\x1e\n" +
+	"\x05ranks\x18\x02 \x03(\v2\b.pb.RankR\x05ranks\"4\n" +
+	"\x04Rank\x12\x16\n" +
+	"\x06userId\x18\x01 \x01(\rR\x06userId\x12\x14\n" +
+	"\x05score\x18\x02 \x01(\x03R\x05score*P\n" +
 	"\aErrCode\x12\x06\n" +
 	"\x02Ok\x10\x00\x12\x17\n" +
 	"\x13InternalServerError\x10\x01\x12\x13\n" +
@@ -368,7 +432,7 @@ func file_def_proto_rawDescGZIP() []byte {
 }
 
 var file_def_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_def_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_def_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_def_proto_goTypes = []any{
 	(ErrCode)(0),        // 0: pb.ErrCode
 	(*UserData)(nil),    // 1: pb.UserData
@@ -376,16 +440,18 @@ var file_def_proto_goTypes = []any{
 	(*AssetsInfo)(nil),  // 3: pb.AssetsInfo
 	(*LevelInfo)(nil),   // 4: pb.LevelInfo
 	(*LevelDetail)(nil), // 5: pb.LevelDetail
+	(*Rank)(nil),        // 6: pb.Rank
 }
 var file_def_proto_depIdxs = []int32{
 	2, // 0: pb.UserData.userInfo:type_name -> pb.UserInfo
 	3, // 1: pb.UserData.assetsInfo:type_name -> pb.AssetsInfo
 	4, // 2: pb.UserData.levelInfo:type_name -> pb.LevelInfo
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	6, // 3: pb.LevelDetail.ranks:type_name -> pb.Rank
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_def_proto_init() }
@@ -399,7 +465,7 @@ func file_def_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_def_proto_rawDesc), len(file_def_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

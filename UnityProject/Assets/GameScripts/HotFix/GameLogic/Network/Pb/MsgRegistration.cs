@@ -16,8 +16,6 @@ public class MsgReg
 		MsgMeta.RegisterMsgMeta((int)MsgId.S2CLogin, typeof(S2C_Login));
 		MsgMeta.RegisterMsgMeta((int)MsgId.C2SGetLevelDetail, typeof(C2S_GetLevelDetail));
 		MsgMeta.RegisterMsgMeta((int)MsgId.S2CGetLevelDetail, typeof(S2C_GetLevelDetail));
-		MsgMeta.RegisterMsgMeta((int)MsgId.C2SStartLevel, typeof(C2S_StartLevel));
-		MsgMeta.RegisterMsgMeta((int)MsgId.S2CStartLevel, typeof(S2C_StartLevel));
 		MsgMeta.RegisterMsgMeta((int)MsgId.C2SFinishLevel, typeof(C2S_FinishLevel));
 		MsgMeta.RegisterMsgMeta((int)MsgId.S2CFinishLevel, typeof(S2C_FinishLevel));
 	}

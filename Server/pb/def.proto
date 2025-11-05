@@ -21,14 +21,20 @@ message UserInfo {
 }
 
 message AssetsInfo {
-  uint32 coin = 1; // 金币
+  int32 coin = 1; // 金币
   int64 hpFullTime = 2; // 血量满时间
 }
 
 message LevelInfo {
-  uint32 level = 1;
+  int32 level = 1;
 }
 
 message LevelDetail {
-  uint32 level = 1;
+  int32 level = 1;
+  repeated Rank ranks = 2;
+}
+
+message Rank {
+  uint32 userId = 1;
+  int64 score = 2;
 }

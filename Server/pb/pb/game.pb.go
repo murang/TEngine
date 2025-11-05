@@ -32,10 +32,8 @@ const (
 	MsgId_s2c_Login          MsgId = 101
 	MsgId_c2s_GetLevelDetail MsgId = 102
 	MsgId_s2c_GetLevelDetail MsgId = 103
-	MsgId_c2s_StartLevel     MsgId = 104
-	MsgId_s2c_StartLevel     MsgId = 105
-	MsgId_c2s_FinishLevel    MsgId = 106
-	MsgId_s2c_FinishLevel    MsgId = 107
+	MsgId_c2s_FinishLevel    MsgId = 104
+	MsgId_s2c_FinishLevel    MsgId = 105
 )
 
 // Enum value maps for MsgId.
@@ -49,10 +47,8 @@ var (
 		101: "s2c_Login",
 		102: "c2s_GetLevelDetail",
 		103: "s2c_GetLevelDetail",
-		104: "c2s_StartLevel",
-		105: "s2c_StartLevel",
-		106: "c2s_FinishLevel",
-		107: "s2c_FinishLevel",
+		104: "c2s_FinishLevel",
+		105: "s2c_FinishLevel",
 	}
 	MsgId_value = map[string]int32{
 		"Unknown":            0,
@@ -63,10 +59,8 @@ var (
 		"s2c_Login":          101,
 		"c2s_GetLevelDetail": 102,
 		"s2c_GetLevelDetail": 103,
-		"c2s_StartLevel":     104,
-		"s2c_StartLevel":     105,
-		"c2s_FinishLevel":    106,
-		"s2c_FinishLevel":    107,
+		"c2s_FinishLevel":    104,
+		"s2c_FinishLevel":    105,
 	}
 )
 
@@ -397,96 +391,17 @@ func (x *S2C_GetLevelDetail) GetDetail() *LevelDetail {
 	return nil
 }
 
-type C2S_StartLevel struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Level         int32                  `protobuf:"varint,1,opt,name=level,proto3" json:"level,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *C2S_StartLevel) Reset() {
-	*x = C2S_StartLevel{}
-	mi := &file_game_proto_msgTypes[7]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *C2S_StartLevel) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*C2S_StartLevel) ProtoMessage() {}
-
-func (x *C2S_StartLevel) ProtoReflect() protoreflect.Message {
-	mi := &file_game_proto_msgTypes[7]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use C2S_StartLevel.ProtoReflect.Descriptor instead.
-func (*C2S_StartLevel) Descriptor() ([]byte, []int) {
-	return file_game_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *C2S_StartLevel) GetLevel() int32 {
-	if x != nil {
-		return x.Level
-	}
-	return 0
-}
-
-type S2C_StartLevel struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *S2C_StartLevel) Reset() {
-	*x = S2C_StartLevel{}
-	mi := &file_game_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *S2C_StartLevel) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*S2C_StartLevel) ProtoMessage() {}
-
-func (x *S2C_StartLevel) ProtoReflect() protoreflect.Message {
-	mi := &file_game_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use S2C_StartLevel.ProtoReflect.Descriptor instead.
-func (*S2C_StartLevel) Descriptor() ([]byte, []int) {
-	return file_game_proto_rawDescGZIP(), []int{8}
-}
-
 type C2S_FinishLevel struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Level         uint32                 `protobuf:"varint,1,opt,name=level,proto3" json:"level,omitempty"`
+	Level         int32                  `protobuf:"varint,1,opt,name=level,proto3" json:"level,omitempty"`
+	Score         int64                  `protobuf:"varint,2,opt,name=score,proto3" json:"score,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *C2S_FinishLevel) Reset() {
 	*x = C2S_FinishLevel{}
-	mi := &file_game_proto_msgTypes[9]
+	mi := &file_game_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -498,7 +413,7 @@ func (x *C2S_FinishLevel) String() string {
 func (*C2S_FinishLevel) ProtoMessage() {}
 
 func (x *C2S_FinishLevel) ProtoReflect() protoreflect.Message {
-	mi := &file_game_proto_msgTypes[9]
+	mi := &file_game_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -511,25 +426,33 @@ func (x *C2S_FinishLevel) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use C2S_FinishLevel.ProtoReflect.Descriptor instead.
 func (*C2S_FinishLevel) Descriptor() ([]byte, []int) {
-	return file_game_proto_rawDescGZIP(), []int{9}
+	return file_game_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *C2S_FinishLevel) GetLevel() uint32 {
+func (x *C2S_FinishLevel) GetLevel() int32 {
 	if x != nil {
 		return x.Level
 	}
 	return 0
 }
 
+func (x *C2S_FinishLevel) GetScore() int64 {
+	if x != nil {
+		return x.Score
+	}
+	return 0
+}
+
 type S2C_FinishLevel struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Detail        *LevelDetail           `protobuf:"bytes,1,opt,name=detail,proto3" json:"detail,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *S2C_FinishLevel) Reset() {
 	*x = S2C_FinishLevel{}
-	mi := &file_game_proto_msgTypes[10]
+	mi := &file_game_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -541,7 +464,7 @@ func (x *S2C_FinishLevel) String() string {
 func (*S2C_FinishLevel) ProtoMessage() {}
 
 func (x *S2C_FinishLevel) ProtoReflect() protoreflect.Message {
-	mi := &file_game_proto_msgTypes[10]
+	mi := &file_game_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -554,7 +477,14 @@ func (x *S2C_FinishLevel) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use S2C_FinishLevel.ProtoReflect.Descriptor instead.
 func (*S2C_FinishLevel) Descriptor() ([]byte, []int) {
-	return file_game_proto_rawDescGZIP(), []int{10}
+	return file_game_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *S2C_FinishLevel) GetDetail() *LevelDetail {
+	if x != nil {
+		return x.Detail
+	}
+	return nil
 }
 
 var File_game_proto protoreflect.FileDescriptor
@@ -575,13 +505,12 @@ const file_game_proto_rawDesc = "" +
 	"\x12C2S_GetLevelDetail\x12\x14\n" +
 	"\x05level\x18\x01 \x01(\x05R\x05level\"=\n" +
 	"\x12S2C_GetLevelDetail\x12'\n" +
-	"\x06detail\x18\x01 \x01(\v2\x0f.pb.LevelDetailR\x06detail\"&\n" +
-	"\x0eC2S_StartLevel\x12\x14\n" +
-	"\x05level\x18\x01 \x01(\x05R\x05level\"\x10\n" +
-	"\x0eS2C_StartLevel\"'\n" +
+	"\x06detail\x18\x01 \x01(\v2\x0f.pb.LevelDetailR\x06detail\"=\n" +
 	"\x0fC2S_FinishLevel\x12\x14\n" +
-	"\x05level\x18\x01 \x01(\rR\x05level\"\x11\n" +
-	"\x0fS2C_FinishLevel*\xe9\x01\n" +
+	"\x05level\x18\x01 \x01(\x05R\x05level\x12\x14\n" +
+	"\x05score\x18\x02 \x01(\x03R\x05score\":\n" +
+	"\x0fS2C_FinishLevel\x12'\n" +
+	"\x06detail\x18\x01 \x01(\v2\x0f.pb.LevelDetailR\x06detail*\xc1\x01\n" +
 	"\x05MsgId\x12\v\n" +
 	"\aUnknown\x10\x00\x12\x11\n" +
 	"\rc2s_Heartbeat\x10\x01\x12\x11\n" +
@@ -590,11 +519,9 @@ const file_game_proto_rawDesc = "" +
 	"\tc2s_Login\x10d\x12\r\n" +
 	"\ts2c_Login\x10e\x12\x16\n" +
 	"\x12c2s_GetLevelDetail\x10f\x12\x16\n" +
-	"\x12s2c_GetLevelDetail\x10g\x12\x12\n" +
-	"\x0ec2s_StartLevel\x10h\x12\x12\n" +
-	"\x0es2c_StartLevel\x10i\x12\x13\n" +
-	"\x0fc2s_FinishLevel\x10j\x12\x13\n" +
-	"\x0fs2c_FinishLevel\x10kB\x05Z\x03/pbb\x06proto3"
+	"\x12s2c_GetLevelDetail\x10g\x12\x13\n" +
+	"\x0fc2s_FinishLevel\x10h\x12\x13\n" +
+	"\x0fs2c_FinishLevel\x10iB\x05Z\x03/pbb\x06proto3"
 
 var (
 	file_game_proto_rawDescOnce sync.Once
@@ -609,7 +536,7 @@ func file_game_proto_rawDescGZIP() []byte {
 }
 
 var file_game_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_game_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_game_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_game_proto_goTypes = []any{
 	(MsgId)(0),                 // 0: pb.MsgId
 	(*C2S_Heartbeat)(nil),      // 1: pb.C2S_Heartbeat
@@ -619,23 +546,22 @@ var file_game_proto_goTypes = []any{
 	(*S2C_Login)(nil),          // 5: pb.S2C_Login
 	(*C2S_GetLevelDetail)(nil), // 6: pb.C2S_GetLevelDetail
 	(*S2C_GetLevelDetail)(nil), // 7: pb.S2C_GetLevelDetail
-	(*C2S_StartLevel)(nil),     // 8: pb.C2S_StartLevel
-	(*S2C_StartLevel)(nil),     // 9: pb.S2C_StartLevel
-	(*C2S_FinishLevel)(nil),    // 10: pb.C2S_FinishLevel
-	(*S2C_FinishLevel)(nil),    // 11: pb.S2C_FinishLevel
-	(ErrCode)(0),               // 12: pb.ErrCode
-	(*UserData)(nil),           // 13: pb.UserData
-	(*LevelDetail)(nil),        // 14: pb.LevelDetail
+	(*C2S_FinishLevel)(nil),    // 8: pb.C2S_FinishLevel
+	(*S2C_FinishLevel)(nil),    // 9: pb.S2C_FinishLevel
+	(ErrCode)(0),               // 10: pb.ErrCode
+	(*UserData)(nil),           // 11: pb.UserData
+	(*LevelDetail)(nil),        // 12: pb.LevelDetail
 }
 var file_game_proto_depIdxs = []int32{
-	12, // 0: pb.S2C_Error.Code:type_name -> pb.ErrCode
-	13, // 1: pb.S2C_Login.data:type_name -> pb.UserData
-	14, // 2: pb.S2C_GetLevelDetail.detail:type_name -> pb.LevelDetail
-	3,  // [3:3] is the sub-list for method output_type
-	3,  // [3:3] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	10, // 0: pb.S2C_Error.Code:type_name -> pb.ErrCode
+	11, // 1: pb.S2C_Login.data:type_name -> pb.UserData
+	12, // 2: pb.S2C_GetLevelDetail.detail:type_name -> pb.LevelDetail
+	12, // 3: pb.S2C_FinishLevel.detail:type_name -> pb.LevelDetail
+	4,  // [4:4] is the sub-list for method output_type
+	4,  // [4:4] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_game_proto_init() }
@@ -650,7 +576,7 @@ func file_game_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_game_proto_rawDesc), len(file_game_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   11,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
