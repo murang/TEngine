@@ -54,6 +54,7 @@ public static class BuildDLLCommand
         }
         ScriptingDefineSymbols.RemoveScriptingDefineSymbol(EnableHybridClrScriptingDefineSymbol);
         ScriptingDefineSymbols.AddScriptingDefineSymbol(EnableHybridClrScriptingDefineSymbol);
+        UpdateSettingEditor.ForceUpdateAssemblies();
     }
     #endregion
     
