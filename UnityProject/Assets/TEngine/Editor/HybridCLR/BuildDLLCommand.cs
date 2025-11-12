@@ -48,10 +48,10 @@ public static class BuildDLLCommand
         if (!HybridCLR.Editor.SettingsUtil.Enable)
         {
             HybridCLR.Editor.SettingsUtil.Enable = true;
-            UpdateSettingEditor.ForceUpdateAssemblies();
         }
         ScriptingDefineSymbols.RemoveScriptingDefineSymbol(EnableHybridClrScriptingDefineSymbol);
         ScriptingDefineSymbols.AddScriptingDefineSymbol(EnableHybridClrScriptingDefineSymbol);
+        UpdateSettingEditor.ForceUpdateAssemblies();
     }
     #endregion
     
