@@ -212,9 +212,7 @@ namespace TEngine.Editor.UI
             {
                 string path = savePath?.Replace("\\", "/");
 
-                bool isOk = EditorUtility.DisplayDialog("生成脚本确认", $"将在目录: {path} 生成脚本文件: {fileName}", "确认", "取消");
-
-                if (!isOk || string.IsNullOrEmpty(path))
+                if (string.IsNullOrEmpty(path))
                 {
                     return false;
                 }
@@ -229,21 +227,17 @@ namespace TEngine.Editor.UI
 
                 if (File.Exists(filePath))
                 {
-                    bool isOverride =
-                        EditorUtility.DisplayDialog("警告", $"目录: {path} 已存在脚本文件: {fileName} 是否覆盖生成？", "确认", "取消");
-
-                    if (isOverride)
+                    FileAttributes attributes = File.GetAttributes(filePath);
+                    if ((attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                     {
-                        File.Delete(filePath);
-                        AssetDatabase.Refresh();
+                        File.SetAttributes(filePath, attributes & ~FileAttributes.ReadOnly);
                     }
-                    else
-                    {
-                        return false;
-                    }
+                    File.Delete(filePath);
+                    AssetDatabase.Refresh();
                 }
 
                 File.WriteAllText(filePath, strFile.ToString(), Encoding.UTF8);
+                File.SetAttributes(filePath, File.GetAttributes(filePath) | FileAttributes.ReadOnly);
                 AssetDatabase.Refresh();
             }
             else
