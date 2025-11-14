@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace TEngine.Editor.UI
 {
-    public partial class UIScriptGenerator
+    public partial class ScriptGenerator
     {
-        public class ScriptAutoGenerateWindow: EditorWindow
+        public class GenerateUIComponentWindow : EditorWindow
         {
             private bool m_isAutoDiff = true;
             private bool m_isWindow;
@@ -35,11 +35,12 @@ namespace TEngine.Editor.UI
             [MenuItem("GameObject/ScriptGenerator/绑定UI组件", priority = 81)]
             public static void GenerateUIComponent()
             {
-                var window = CreateWindow<ScriptAutoGenerateWindow>();
-                window.titleContent = new GUIContent("生成UI组件");
-                window.minSize = new Vector2(MIN_WIDTH, MIN_HEIGHT);
-                window.m_isGenerateUIComponent = true;
-                CenterWindow(window);
+                ScriptGenerator.GenerateUIComponentScript();
+                // var window = CreateWindow<GenerateUIComponentWindow>();
+                // window.titleContent = new GUIContent("生成UI组件");
+                // window.minSize = new Vector2(MIN_WIDTH, MIN_HEIGHT);
+                // window.m_isGenerateUIComponent = true;
+                // CenterWindow(window);
             }
 
             [MenuItem("GameObject/ScriptGenerator/绑定UI组件", true)]
@@ -51,7 +52,7 @@ namespace TEngine.Editor.UI
             [MenuItem("GameObject/ScriptGenerator/生成窗口脚本", priority = 82)]
             public static void GenerateUIPropertyBindComponent()
             {
-                var window = CreateWindow<ScriptAutoGenerateWindow>();
+                var window = CreateWindow<GenerateUIComponentWindow>();
                 window.titleContent = new GUIContent("生成UI窗口");
                 window.minSize = new Vector2(MIN_WIDTH, MIN_HEIGHT);
                 window.m_isGenerateUIComponent = false;
@@ -68,7 +69,7 @@ namespace TEngine.Editor.UI
             [MenuItem("GameObject/ScriptGenerator/生成窗口脚本 (UniTask)", priority = 83)]
             public static void GenerateUIPropertyBindComponentUniTask()
             {
-                var window = CreateWindow<ScriptAutoGenerateWindow>();
+                var window = CreateWindow<GenerateUIComponentWindow>();
                 window.titleContent = new GUIContent("生成UI窗口");
                 window.minSize = new Vector2(MIN_WIDTH, MIN_HEIGHT);
                 window.m_isGenerateUIComponent = false;
@@ -530,7 +531,7 @@ namespace TEngine.Editor.UI
 
                 if (m_isGenerateUIComponent)
                 {
-                    success = GenerateUIComponentScript(m_savePath);
+                    success = GenerateUIComponentScript();
                     message = success ? "UI组件脚本生成成功！" : "UI组件脚本生成失败";
                 }
                 else
@@ -588,16 +589,15 @@ namespace TEngine.Editor.UI
                 Debug.Log("已重置生成路径为默认设置");
             }
 
-            private bool GenerateUIComponentScript(string savePath)
+            private bool GenerateUIComponentScript()
             {
-                var succ = UIScriptGenerator.GenerateUIComponentScript(savePath, m_isAutoDiff, m_isWidget);
-                if(succ) Debug.Log($"生成UI组件脚本到: {savePath}");
+                var succ = ScriptGenerator.GenerateUIComponentScript();
                 return succ;
             }
 
             private bool GenerateCSharpScript(bool useUniTask, string savePath)
             {
-                var succ = UIScriptGenerator.GenerateCSharpScript(true, useUniTask, true, savePath, m_isAutoDiff, m_isWidget);
+                var succ = ScriptGenerator.GenerateCSharpScript(true, useUniTask, true, savePath, m_isAutoDiff, m_isWidget);
                 if(succ) Debug.Log($"生成C#脚本到: {savePath} (UniTask: {useUniTask})");
                 return succ;
             }
