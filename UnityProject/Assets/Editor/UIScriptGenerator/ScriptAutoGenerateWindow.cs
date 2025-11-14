@@ -155,29 +155,12 @@ namespace TEngine.Editor.UI
                 if (root != null)
                 {
                     // CheckVariableNames();
-                    var windowComSufName = ScriptGeneratorSetting.Instance.WindowComponentSuffixName;
-                    var widgetComSufName = ScriptGeneratorSetting.Instance.WidgetComponentSuffixName;
-                    var rootName = m_isGenerateUIComponent ? $"{root.name}{windowComSufName}" : root.name;
-
-                    if (root.name.StartsWith(widgetPrefix))
+                    var rootName = root.name;
+                    if (m_isAutoDiff)
                     {
-                        rootName = m_isGenerateUIComponent
-                            ? $"{root.name.Replace(GetUIWidgetName(), string.Empty)}{widgetComSufName}"
-                            : $"{root.name.Replace(GetUIWidgetName(), string.Empty)}";
-                    }
-                    if (!m_isAutoDiff)
-                    {
-                        if (m_isWidget)
+                        if (root.name.StartsWith(widgetPrefix))
                         {
-                            rootName = m_isGenerateUIComponent
-                                ? $"{root.name}{widgetComSufName}"
-                                : $"{root.name}";
-                        }
-                        else if (m_isWindow)
-                        {
-                            rootName = m_isGenerateUIComponent
-                                ? $"{root.name}{windowComSufName}"
-                                : $"{root.name}";
+                            rootName = $"{root.name.Replace(GetUIWidgetName(), string.Empty)}";
                         }
                     }
                     m_csName = $"{rootName}.cs";

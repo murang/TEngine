@@ -32,12 +32,6 @@ public static class TEngineUISettingsProvider
                     var codePath = scriptGenerator.FindProperty("_codePath");
                     codePath.stringValue =
                         DrawFolderField("代码文件生成路径", String.Empty, codePath.stringValue); // "FolderOpened Icon"
-                    var windowComponentSuffixName = scriptGenerator.FindProperty("windowComponentSuffixName");
-                    windowComponentSuffixName.stringValue =
-                        EditorGUILayout.TextField("窗体组件脚本后缀名", windowComponentSuffixName.stringValue);
-                    var widgetComponentSuffixName = scriptGenerator.FindProperty("widgetComponentSuffixName");
-                    widgetComponentSuffixName.stringValue =
-                        EditorGUILayout.TextField("widget组件脚本后缀名", widgetComponentSuffixName.stringValue);
                 }
                 // EditorGUILayout.PropertyField(scriptGenerator.FindProperty("_codePath"));
                 EditorGUILayout.PropertyField(scriptGenerator.FindProperty("_namespace"));  

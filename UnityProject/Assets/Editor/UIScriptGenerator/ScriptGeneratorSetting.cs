@@ -29,8 +29,6 @@ namespace TEngine.Editor.UI
         }
 
         [SerializeField] private bool useBindComponent;
-        [SerializeField] private string windowComponentSuffixName = "DataComponent";
-        [SerializeField] private string widgetComponentSuffixName = "WidgetDataComponent";
 
         // [FolderPath]
         // [LabelText("默认组件代码保存路径")]
@@ -44,9 +42,6 @@ namespace TEngine.Editor.UI
         // [LabelText("子组件名称(不会往下继续遍历)")]
         [SerializeField]
         private string _widgetName = "item";
-
-        public string WindowComponentSuffixName => windowComponentSuffixName;
-        public string WidgetComponentSuffixName => widgetComponentSuffixName;
 
         public bool UseBindComponent => useBindComponent;
 
