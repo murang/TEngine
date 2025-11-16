@@ -102,7 +102,7 @@ namespace TEngine
         /// 是否支持边玩边下载。
         /// </summary>
         [SerializeField]
-        private bool updatableWhilePlaying = false;
+        public bool updatableWhilePlaying = false;
 
         /// <summary>
         /// 是否支持边玩边下载。
