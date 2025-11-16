@@ -20,6 +20,7 @@ namespace TEngine.Editor.Inspector
         private SerializedProperty _encryptionType = null;
         private SerializedProperty _updatableWhilePlaying = null;
         private SerializedProperty _milliseconds = null;
+        private SerializedProperty _autoUnloadBundleWhenUnused = null;
         private SerializedProperty _minUnloadUnusedAssetsInterval = null;
         private SerializedProperty _maxUnloadUnusedAssetsInterval = null;
         private  SerializedProperty _useSystemUnloadUnusedAssets = null;
@@ -88,6 +89,21 @@ namespace TEngine.Editor.Inspector
                     _milliseconds.longValue = milliseconds;
                 }
             }
+
+            var autoUnloadBundleWhenUnused = EditorGUILayout.ToggleLeft("Auto Unload Bundle When Unused", _autoUnloadBundleWhenUnused.boolValue);
+            if (autoUnloadBundleWhenUnused != _autoUnloadBundleWhenUnused.boolValue)
+            {
+                if (EditorApplication.isPlaying)
+                {
+                    t.autoUnloadBundleWhenUnused = autoUnloadBundleWhenUnused;
+                }
+                else
+                {
+                    _autoUnloadBundleWhenUnused.boolValue = autoUnloadBundleWhenUnused;
+                }
+            }
+
+
 
             EditorGUILayout.PropertyField(_useSystemUnloadUnusedAssets);
             
@@ -226,6 +242,7 @@ namespace TEngine.Editor.Inspector
             _encryptionType = serializedObject.FindProperty("encryptionType");
             _updatableWhilePlaying = serializedObject.FindProperty("updatableWhilePlaying");
             _milliseconds = serializedObject.FindProperty("milliseconds");
+            _autoUnloadBundleWhenUnused = serializedObject.FindProperty("autoUnloadBundleWhenUnused");
             _minUnloadUnusedAssetsInterval = serializedObject.FindProperty("minUnloadUnusedAssetsInterval");
             _maxUnloadUnusedAssetsInterval = serializedObject.FindProperty("maxUnloadUnusedAssetsInterval");
             _useSystemUnloadUnusedAssets = serializedObject.FindProperty("useSystemUnloadUnusedAssets");
