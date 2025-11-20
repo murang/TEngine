@@ -162,10 +162,10 @@ namespace TEngine.Editor.UI
                     }
                     else
                     {
-                        if (string.Equals(uiTypeName, "UIWindow", StringComparison.Ordinal))
-                        {
-                            strFile.AppendLine($"\t[Window(UILayer.UI, location : \"{fileName.Replace(".cs", "")}\")]");
-                        }
+                        //if (string.Equals(uiTypeName, "UIWindow", StringComparison.Ordinal))
+                        //{
+                        //    strFile.AppendLine($"\t[Window(UILayer.UI, location : \"{fileName.Replace(".cs", "")}\")]");
+                        //}
 
                         strFile.AppendLine($"\tpublic partial class {fileName.Replace(".cs", "")} : {uiTypeName}");
                     }
@@ -234,7 +234,7 @@ namespace TEngine.Editor.UI
                 File.SetAttributes(filePath, File.GetAttributes(filePath) | FileAttributes.ReadOnly);
                 if (isGenImp)
                 {
-                    GenerateImpCSharpScript(isUniTask, fileName, impSavePath);
+                    GenerateImpCSharpScript(isUniTask, fileName, impSavePath, uiTypeName);
                 }
                 AssetDatabase.Refresh();
             }
@@ -339,9 +339,9 @@ namespace TEngine.Editor.UI
             }
         }
         
-         #region GenerateImpCSharp
+        #region GenerateImpCSharp
 
-        private static bool GenerateImpCSharpScript(bool isUniTask = false, string fileName = null, string impSavePath = null)
+        private static bool GenerateImpCSharpScript(bool isUniTask = false, string fileName = null, string impSavePath = null, string uiTypeName = null)
         {
             var root = Selection.activeTransform;
             if (root == null || string.IsNullOrEmpty(fileName))
@@ -369,6 +369,10 @@ namespace TEngine.Editor.UI
             strFile.AppendLine($"namespace {ScriptGeneratorSetting.GetUINameSpace()}");
             strFile.AppendLine("{");
             {
+                if (string.Equals(uiTypeName, "UIWindow", StringComparison.Ordinal))
+                {
+                    strFile.AppendLine($"\t[Window(UILayer.UI, location : \"{fileName.Replace(".cs", "")}\")]");
+                }
                 strFile.AppendLine($"\tpublic partial class {fileName.Replace(".cs", "")}");
                 strFile.AppendLine("\t{");
                 {
