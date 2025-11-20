@@ -226,7 +226,7 @@ TEngine 本身为**纯净的客户端框架**，不强绑定任何服务器。�
 ### 服务器框架推荐
 
 - **[GameNetty](https://github.com/ALEXTANGXIAO/GameNetty)** - 源于 ETServer，首次拆分最新的 ET8.1 的前后端解决方案（包），客户端最精简约 750k，几乎零成本无侵入嵌入
-- **[Fantasy](https://github.com/qq362946/Fantasy)** - 源于 ETServer 但极为简洁，更好上手的商业级服务器框架（Fantasy 分支已集成）
+- **[Fantasy](https://github.com/Alex-Rachel/TEngine)** - 源于 ETServer 但极为简洁，更好上手的商业级服务器框架（Fantasy 分支已集成）
 
 ---
 
@@ -237,7 +237,7 @@ TEngine 本身为**纯净的客户端框架**，不强绑定任何服务器。�
 | **YooAsset** | 商业级经历百万 DAU 游戏验证的资源管理系统 | [GitHub](https://github.com/tuyoogame/YooAsset) |
 | **HybridCLR** | 特性完整、零成本、高性能、低内存的近乎完美的 Unity 全平台原生 C# 热更方案 | [GitHub](https://github.com/focus-creative-games/hybridclr) |
 | **Luban** | 最佳游戏配置解决方案 | [GitHub](https://github.com/focus-creative-games/luban) |
-| **Fantasy** | 源于 ETServer 但极为简洁，更好上手的商业级服务器框架 | [GitHub](https://github.com/qq362946/Fantasy) |
+| **Fantasy** | 源于 ETServer 但极为简洁，更好上手的商业级服务器框架 | [GitHub](https://github.com/Alex-Rachel/TEngine) |
 | **GameNetty** | 源于 ETServer，首次拆分最新的 ET8.1 的前后端解决方案 | [GitHub](https://github.com/ALEXTANGXIAO/GameNetty) |
 | **JEngine** | 使 Unity 开发的游戏支持热更新的解决方案 | [GitHub](https://github.com/JasonXuDeveloper/JEngine) |
 
@@ -289,6 +289,10 @@ git checkout demo
 
 ## 🤝 贡献与支持
 
+## 🙏 感谢所有为 TEngine 做出贡献的开发者
+
+[![Contributors](https://contrib.rocks/image?repo=Alex-Rachel/TEngine)](https://github.com/Alex-Rachel/TEngine/graphs/contributors)
+
 ### 贡献
 
 欢迎提交 Issue 和 Pull Request！
@@ -300,12 +304,6 @@ git checkout demo
 [☕ 请我喝杯奶茶](Books/Donate.md)
 
 您的赞助会让我们做得更快更好！如果觉得 TEngine 对您有帮助，不妨请我可爱的女儿买杯奶茶吧~ 🥤
-
----
-
-## 📄 许可证
-
-本项目采用 [LICENSE](LICENSE) 许可证。
 
 ---
 
