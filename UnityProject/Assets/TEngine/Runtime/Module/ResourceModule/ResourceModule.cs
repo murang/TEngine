@@ -25,7 +25,7 @@ namespace TEngine
         /// 资源系统运行模式。
         /// </summary>
         public EPlayMode PlayMode { get; set; } = EPlayMode.OfflinePlayMode;
-        
+
         public EncryptionType EncryptionType { get; set; } = EncryptionType.None;
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace TEngine
         public string HostServerURL { get; set; }
 
         public string FallbackHostServerURL { get; set; }
-        
+
         /// <summary>
         /// WebGL：加载资源方式
         /// </summary>
@@ -130,6 +130,7 @@ namespace TEngine
                 defaultPackage = YooAssets.CreatePackage(packageName);
                 YooAssets.SetDefaultPackage(defaultPackage);
             }
+
             DefaultPackage = defaultPackage;
 
             IObjectPoolModule objectPoolManager = ModuleSystem.GetModule<IObjectPoolModule>();
@@ -180,9 +181,9 @@ namespace TEngine
                 createParameters.AutoUnloadBundleWhenUnused = AutoUnloadBundleWhenUnused;
                 initializationOperation = package.InitializeAsync(createParameters);
             }
-            
+
             IDecryptionServices decryptionServices = CreateDecryptionServices();
-            
+
             // 单机运行模式
             if (playMode == EPlayMode.OfflinePlayMode)
             {
@@ -220,10 +221,11 @@ namespace TEngine
                 createParameters.WebServerFileSystemParameters = WechatFileSystemCreater.CreateFileSystemParameters(packageRoot, remoteServices, webDecryptionServices);
 #else
                 Log.Info("=======================UNITY_WEBGL=======================");
-                if (LoadResWayWebGL==LoadResWayWebGL.Remote)
+                if (LoadResWayWebGL == LoadResWayWebGL.Remote)
                 {
                     createParameters.WebRemoteFileSystemParameters = FileSystemParameters.CreateDefaultWebRemoteFileSystemParameters(remoteServices, webDecryptionServices);
                 }
+
                 createParameters.WebServerFileSystemParameters = FileSystemParameters.CreateDefaultWebServerFileSystemParameters(webDecryptionServices);
 #endif
                 createParameters.AutoUnloadBundleWhenUnused = AutoUnloadBundleWhenUnused;
@@ -349,7 +351,7 @@ namespace TEngine
         /// <param name="customPackageName">指定资源包的名称。不传使用默认资源包</param>
         public ResourceDownloaderOperation CreateResourceDownloader(string customPackageName = "")
         {
-            ResourcePackage package = null;
+            ResourcePackage package;
             if (string.IsNullOrEmpty(customPackageName))
             {
                 package = YooAssets.GetPackage(this.DefaultPackageName);
@@ -694,11 +696,16 @@ namespace TEngine
 
         public T LoadAsset<T>(string location, string packageName = "") where T : UnityEngine.Object
         {
+            return LoadAsset(location, typeof(T), packageName) as T;
+        }
+
+        public UnityEngine.Object LoadAsset(string location, Type assetType, string packageName = "")
+        {
             if (string.IsNullOrEmpty(location))
             {
                 throw new GameFrameworkException("Asset name is invalid.");
             }
-            
+
             if (!CheckLocationValid(location, packageName))
             {
                 Log.Error($"Could not found location [{location}].");
@@ -709,12 +716,12 @@ namespace TEngine
             AssetObject assetObject = _assetPool.Spawn(assetObjectKey);
             if (assetObject != null)
             {
-                return assetObject.Target as T;
+                return assetObject.Target as UnityEngine.Object;
             }
 
-            AssetHandle handle = GetHandleSync<T>(location, packageName: packageName);
+            AssetHandle handle = GetHandleSync(location, assetType, packageName);
 
-            T ret = handle.AssetObject as T;
+            var ret = handle.AssetObject;
 
             assetObject = AssetObject.Create(assetObjectKey, handle.AssetObject, handle, this);
             _assetPool.Register(assetObject, true);
@@ -728,7 +735,7 @@ namespace TEngine
             {
                 throw new GameFrameworkException("Asset name is invalid.");
             }
-            
+
             if (!CheckLocationValid(location, packageName))
             {
                 Log.Error($"Could not found location [{location}].");
@@ -776,7 +783,7 @@ namespace TEngine
             {
                 throw new GameFrameworkException("Asset name is invalid.");
             }
-            
+
             if (!CheckLocationValid(location, packageName))
             {
                 Log.Error($"Could not found location [{location}].");
@@ -820,11 +827,16 @@ namespace TEngine
 
         public async UniTask<T> LoadAssetAsync<T>(string location, CancellationToken cancellationToken = default, string packageName = "") where T : UnityEngine.Object
         {
+            return await LoadAssetAsync(location, typeof(T), cancellationToken, packageName) as T;
+        }
+
+        public async UniTask<UnityEngine.Object> LoadAssetAsync(string location, Type assetType, CancellationToken cancellationToken = default, string packageName = "")
+        {
             if (string.IsNullOrEmpty(location))
             {
                 throw new GameFrameworkException("Asset name is invalid.");
             }
-            
+
             if (!CheckLocationValid(location, packageName))
             {
                 Log.Error($"Could not found location [{location}].");
@@ -839,13 +851,13 @@ namespace TEngine
             if (assetObject != null)
             {
                 await UniTask.Yield();
-                return assetObject.Target as T;
+                return assetObject.Target as UnityEngine.Object;
             }
 
             _assetLoadingList.Add(assetObjectKey);
 
-            AssetHandle handle = GetHandleAsync<T>(location, packageName: packageName);
-            bool cancelOrFailed = await handle.ToUniTask().AttachExternalCancellation(cancellationToken).SuppressCancellationThrow();
+            AssetHandle handle = GetHandleAsync(location, assetType, packageName);
+            bool cancelOrFailed = await handle.ToUniTask(cancellationToken: cancellationToken).AttachExternalCancellation(cancellationToken).SuppressCancellationThrow();
 
             if (cancelOrFailed)
             {
@@ -858,7 +870,7 @@ namespace TEngine
 
             _assetLoadingList.Remove(assetObjectKey);
 
-            return handle.AssetObject as T;
+            return handle.AssetObject;
         }
 
         public async UniTask<GameObject> LoadGameObjectAsync(string location, Transform parent = null, CancellationToken cancellationToken = default, string packageName = "")
@@ -867,7 +879,7 @@ namespace TEngine
             {
                 throw new GameFrameworkException("Asset name is invalid.");
             }
-            
+
             if (!CheckLocationValid(location, packageName))
             {
                 Log.Error($"Could not found location [{location}].");
@@ -934,7 +946,7 @@ namespace TEngine
             {
                 throw new GameFrameworkException("Load asset callbacks is invalid.");
             }
-            
+
             if (!CheckLocationValid(location, packageName))
             {
                 string errorMessage = Utility.Text.Format("Could not found location [{0}].", location);
@@ -943,6 +955,7 @@ namespace TEngine
                 {
                     loadAssetCallbacks.LoadAssetFailureCallback(location, LoadResourceStatus.NotExist, errorMessage, userData);
                 }
+
                 return;
             }
 
@@ -1035,7 +1048,7 @@ namespace TEngine
             {
                 throw new GameFrameworkException("Load asset callbacks is invalid.");
             }
-            
+
             if (!CheckLocationValid(location, packageName))
             {
                 string errorMessage = Utility.Text.Format("Could not found location [{0}].", location);
@@ -1044,6 +1057,7 @@ namespace TEngine
                 {
                     loadAssetCallbacks.LoadAssetFailureCallback(location, LoadResourceStatus.NotExist, errorMessage, userData);
                 }
+
                 return;
             }
 
@@ -1144,13 +1158,18 @@ namespace TEngine
         /// <returns>资源操作句柄。</returns>
         public AssetHandle LoadAssetSyncHandle<T>(string location, string packageName = "") where T : UnityEngine.Object
         {
+            return LoadAssetSyncHandle(location, typeof(T), packageName);
+        }
+
+        public AssetHandle LoadAssetSyncHandle(string location, System.Type type, string packageName = "")
+        {
             if (string.IsNullOrEmpty(packageName))
             {
-                return YooAssets.LoadAssetSync<T>(location);
+                return YooAssets.LoadAssetSync(location, type);
             }
 
             var package = YooAssets.GetPackage(packageName);
-            return package.LoadAssetSync<T>(location);
+            return package.LoadAssetSync(location, type);
         }
 
         /// <summary>
@@ -1162,13 +1181,18 @@ namespace TEngine
         /// <returns>资源操作句柄。</returns>
         public AssetHandle LoadAssetAsyncHandle<T>(string location, string packageName = "") where T : UnityEngine.Object
         {
+            return LoadAssetAsyncHandle(location, typeof(T), packageName);
+        }
+
+        public AssetHandle LoadAssetAsyncHandle(string location, Type assetType, string packageName = "")
+        {
             if (string.IsNullOrEmpty(packageName))
             {
-                return YooAssets.LoadAssetAsync<T>(location);
+                return YooAssets.LoadAssetAsync(location, assetType);
             }
 
             var package = YooAssets.GetPackage(packageName);
-            return package.LoadAssetAsync<T>(location);
+            return package.LoadAssetAsync(location, assetType);
         }
 
         #endregion
