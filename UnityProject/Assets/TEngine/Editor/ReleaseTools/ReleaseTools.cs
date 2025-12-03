@@ -209,8 +209,8 @@ namespace TEngine
                 scriptableBuildParameters.BuiltinShadersBundleName = GetBuiltinShaderBundleName("DefaultPackage");
                 scriptableBuildParameters.ReplaceAssetPathWithAddress = Settings.UpdateSetting.GetReplaceAssetPathWithAddress();
             }
-            
-            buildParameters.BuildOutputRoot = AssetBundleBuilderHelper.GetDefaultBuildOutputRoot();
+
+            buildParameters.BuildOutputRoot = outputRoot;//AssetBundleBuilderHelper.GetDefaultBuildOutputRoot();
             buildParameters.BuildinFileRoot = AssetBundleBuilderHelper.GetStreamingAssetsRoot();
             buildParameters.BuildPipeline = buildPipeline.ToString();
             buildParameters.BuildTarget = buildTarget;
