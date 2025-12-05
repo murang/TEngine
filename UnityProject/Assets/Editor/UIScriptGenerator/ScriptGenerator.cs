@@ -273,6 +273,10 @@ namespace TEngine.Editor.UI
                         {
                             strBind.Append($"\t\t\t{varName} = CreateWidgetByType<{componentName}>(\"{varPath}\");\n");
                         }
+                        else
+                        {
+                            strBind.Append($"\t\t\t{varName} = FindChildComponent<{componentName}>(\"{varPath}\");\n");
+                        }
                         break;
                 }
 
