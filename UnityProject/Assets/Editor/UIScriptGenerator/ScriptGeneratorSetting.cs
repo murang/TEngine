@@ -86,6 +86,7 @@ namespace TEngine.Editor.UI
             new ScriptGenerateRuler("m_curve", UIComponentName.AnimationCurve),
             new ScriptGenerateRuler("m_canvasGroup", UIComponentName.CanvasGroup),
             new ScriptGenerateRuler("m_tmp",UIComponentName.TextMeshProUGUI),
+            new ScriptGenerateRuler("m_tmpInput",UIComponentName.TextMeshProInputField),
         };
 
         public List<ScriptGenerateRuler> ScriptGenerateRule => scriptGenerateRule;

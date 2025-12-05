@@ -85,3 +85,9 @@ MonoBehaviour:
   - uiElementRegex: m_tmp
     componentName: 19
     isUIWidget: 0
+  - uiElementRegex: m_tmpInput
+    componentName: 22
+    isUIWidget: 0
+  - uiElementRegex: m_red
+    componentName: 23
+    isUIWidget: 1
