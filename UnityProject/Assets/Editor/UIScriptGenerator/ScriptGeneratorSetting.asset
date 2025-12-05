@@ -84,7 +84,7 @@ MonoBehaviour:
     isUIWidget: 0
   - uiElementRegex: m_toggle
     componentName: 15
-    isUIWidget: 1
+    isUIWidget: 0
   - uiElementRegex: m_tmp
     componentName: 19
     isUIWidget: 0
