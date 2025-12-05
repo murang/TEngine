@@ -71,7 +71,7 @@ namespace TEngine.Editor.UI
 
                 if (includeListener)
                 {
-#if ENABLE_TEXTMESHPRO
+#if TextMeshPro
                     strFile.Append("using TMPro;\n");
 #endif
                     if (isUniTask)
