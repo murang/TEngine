@@ -292,19 +292,14 @@ namespace TEngine.Editor.UI
             }
 
             // strVar.AppendLine($"\t\tprivate {componentName} {varName};");
-
-            if (rule.isUIWidget)
-            {
-                strVar.AppendLine($"\t\tprivate GameObject {varName}{(ScriptGeneratorSetting.Instance.NullableEnable?" = null!;":";")}");
-            }
-            else
-            {
-                strVar.AppendLine($"\t\tprivate {componentName} {varName}{(ScriptGeneratorSetting.Instance.NullableEnable?" = null!;":";")}");
-            }
-
-            if (rule.componentName == UIComponentName.GameObject || rule.isUIWidget)
+            strVar.AppendLine($"\t\tprivate {componentName} {varName}{(ScriptGeneratorSetting.Instance.NullableEnable?" = null!;":";")}");
+            if (rule.componentName == UIComponentName.GameObject)
             {
                 strBind.AppendLine($"\t\t\t{varName} = m_bindComponent.GetComponent<RectTransform>({m_bindIndex}).gameObject;");
+            }
+            else if (rule.componentName != UIComponentName.GameObject && rule.isUIWidget)
+            {
+                strBind.AppendLine($"\t\t\t{varName} = CreateWidgetByPrefab<{componentName}>(m_bindComponent.GetComponent<RectTransform>({m_bindIndex}).gameObject);");
             }
             else
             {
