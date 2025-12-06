@@ -653,7 +653,7 @@ namespace TEngine.Editor.UI
                 UIComponentName.VerticalLayoutGroup => typeof(VerticalLayoutGroup),
                 UIComponentName.Dropdown => typeof(Dropdown),
                 UIComponentName.TextMeshProUGUI => typeof(TextMeshProUGUI),
-                UIComponentName.TextMeshProInputField => typeof(TMP_InputField),
+                UIComponentName.TMP_InputField => typeof(TMP_InputField),
                 _ => null,
             };
         }
