@@ -271,7 +271,7 @@ namespace TEngine.Editor.UI
                     default:
                         if (isUIWidget)
                         {
-                            strBind.Append($"\t\t\t{varName} = CreateWidgetByPrefab<{componentName}>(\"{varPath}\");\n");
+                            strBind.Append($"\t\t\t{varName} = CreateWidget<{componentName}>(\"{varPath}\");\n");
                         }
                         else
                         {
