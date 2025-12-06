@@ -141,13 +141,13 @@ namespace GameLogic
                 {
                     RebindComponents();
                 }
-                if (GUILayout.Button("生成脚本窗口", GUILayout.Height(25)))
+                if (GUILayout.Button("生成脚本", GUILayout.Height(25)))
                 {
                     // RemoveNullComponents();
                     ScriptGenerator.GenerateCSharpScript(true, false, true, m_genCodePath.stringValue,
                         m_className.stringValue, m_uiTypeOptions[m_selectedIndex], m_isGenImpClass.boolValue, m_impCodePath.stringValue);
                 }
-                if (GUILayout.Button("生成UniTask脚本本窗口", GUILayout.Height(25)))
+                if (GUILayout.Button("生成UniTask脚本", GUILayout.Height(25)))
                 {
                     // RemoveNullComponents();
                     ScriptGenerator.GenerateCSharpScript(true, true, true, m_genCodePath.stringValue,
