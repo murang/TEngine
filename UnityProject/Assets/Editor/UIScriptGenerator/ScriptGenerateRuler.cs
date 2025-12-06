@@ -94,6 +94,6 @@ namespace TEngine.Editor.UI
         TextMeshProUGUI,
         Canvas,
         Dropdown,
-        TextMeshProInputField,
+        TMP_InputField,
     }
 }
