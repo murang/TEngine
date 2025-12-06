@@ -299,7 +299,7 @@ namespace TEngine.Editor.UI
             }
             else if (rule.componentName != UIComponentName.GameObject && rule.isUIWidget)
             {
-                strBind.AppendLine($"\t\t\t{varName} = CreateWidgetByPrefab<{componentName}>(m_bindComponent.GetComponent<RectTransform>({m_bindIndex}).gameObject);");
+                strBind.AppendLine($"\t\t\t{varName} = CreateWidget<{componentName}>(m_bindComponent.GetComponent<RectTransform>({m_bindIndex}).gameObject);");
             }
             else
             {
