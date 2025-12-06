@@ -88,7 +88,7 @@ namespace TEngine.Editor.UI
             new ScriptGenerateRuler("m_toggle",UIComponentName.Toggle),
 #if TextMeshPro
             new ScriptGenerateRuler("m_tmp",UIComponentName.TextMeshProUGUI),
-            new ScriptGenerateRuler("m_tInput",UIComponentName.TextMeshProInputField), 
+            new ScriptGenerateRuler("m_tInput",UIComponentName.TMP_InputField), 
 #endif
         };
 
