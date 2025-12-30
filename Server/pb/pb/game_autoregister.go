@@ -15,6 +15,8 @@ func init() {
 	pb.RegisterMsg(uint32(MsgId_s2c_Login), reflect.TypeOf(&S2C_Login{}))
 	pb.RegisterMsg(uint32(MsgId_c2s_GetLevelDetail), reflect.TypeOf(&C2S_GetLevelDetail{}))
 	pb.RegisterMsg(uint32(MsgId_s2c_GetLevelDetail), reflect.TypeOf(&S2C_GetLevelDetail{}))
+	pb.RegisterMsg(uint32(MsgId_c2s_StartLevel), reflect.TypeOf(&C2S_StartLevel{}))
+	pb.RegisterMsg(uint32(MsgId_s2c_StartLevel), reflect.TypeOf(&S2C_StartLevel{}))
 	pb.RegisterMsg(uint32(MsgId_c2s_FinishLevel), reflect.TypeOf(&C2S_FinishLevel{}))
 	pb.RegisterMsg(uint32(MsgId_s2c_FinishLevel), reflect.TypeOf(&S2C_FinishLevel{}))
 	vt.Register(&C2S_Heartbeat{})
@@ -24,6 +26,8 @@ func init() {
 	vt.Register(&S2C_Login{})
 	vt.Register(&C2S_GetLevelDetail{})
 	vt.Register(&S2C_GetLevelDetail{})
+	vt.Register(&C2S_StartLevel{})
+	vt.Register(&S2C_StartLevel{})
 	vt.Register(&C2S_FinishLevel{})
 	vt.Register(&S2C_FinishLevel{})
 }

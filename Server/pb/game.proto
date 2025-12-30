@@ -12,8 +12,10 @@ enum MsgId {
   s2c_Login = 101;
   c2s_GetLevelDetail = 102;
   s2c_GetLevelDetail = 103;
-  c2s_FinishLevel = 104;
-  s2c_FinishLevel = 105;
+  c2s_StartLevel = 104;
+  s2c_StartLevel = 105;
+  c2s_FinishLevel = 106;
+  s2c_FinishLevel = 107;
 }
 
 
@@ -36,6 +38,13 @@ message C2S_GetLevelDetail {
   int32 level = 1;
 }
 message S2C_GetLevelDetail {
+  LevelDetail detail = 1;
+}
+
+message C2S_StartLevel {
+  int32 level = 1;
+}
+message S2C_StartLevel {
   LevelDetail detail = 1;
 }
 
