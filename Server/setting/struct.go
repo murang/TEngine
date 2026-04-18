@@ -7,7 +7,9 @@ type Setting struct {
 
 	DB Mysql `mapstructure:"db"` // 数据库
 
-	Log Log `mapstructure:"log"` // 日志
+	Redis `mapstructure:"redis"` // redis
+
+	Log `mapstructure:"log"` // 日志
 
 	WeChat `mapstructure:"wechat"`
 	TikTok `mapstructure:"tiktok"`

@@ -12,6 +12,13 @@ db:
   password: root
   db_name: d7
 
+# redis
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password:
+  db: 7
+
 # log
 log:
   is_file: false

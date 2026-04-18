@@ -3,6 +3,7 @@ package work
 import (
 	"sync"
 
+	"github.com/murang/potato/log"
 	"github.com/murang/potato/net"
 	"google.golang.org/protobuf/proto"
 )
@@ -10,13 +11,13 @@ import (
 var sessId2Agent = sync.Map{}
 
 type Agent struct {
-	session *net.Session
-	user    *User
+	Session *net.Session
+	User    *User
 }
 
 func AddAgent(session *net.Session) {
 	agent := &Agent{
-		session: session,
+		Session: session,
 	}
 	sessId2Agent.Store(session.ID(), agent)
 }
@@ -31,5 +32,6 @@ func GetAgentBySessionId(sessionId uint64) *Agent {
 }
 
 func (a *Agent) SendMsg(msg proto.Message) {
-	a.session.Send(msg)
+	log.Sugar.Infof("user: %d, <=====: %T %v", a.User.Model.ID, msg, msg)
+	a.Session.Send(msg)
 }
