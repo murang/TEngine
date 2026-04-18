@@ -99,6 +99,7 @@ namespace GameLogic
                 .SetEase(Ease.InQuad)
                 .OnKill(() =>
             {
+                _drops[x,y].View.fbDown?.PlayFeedbacks();
                 GameEvent.Get<IEventBattle>().DropDownEnd();
             });
             _newDrop = null;

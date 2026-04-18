@@ -35,10 +35,10 @@ public partial class GameApp
     private static void StartGameLogic()
     {
         // GameEvent.Get<ILoginUI>().ShowLoginUI();
-        GameModule.UI.ShowUIAsync<LoginUI>();
+        // GameModule.UI.ShowUIAsync<LoginUI>();
         
-        // GameModule.Scene.LoadScene("battle");
-        // var ui =GameModule.UI; // 把ui root固定下来
+        GameModule.Scene.LoadScene("battle");
+        var ui =GameModule.UI; // 把ui root固定下来
     }
     
     private static void Release()
